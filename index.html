@@ -1,1259 +1,624 @@
 <html class="scroll-smooth" lang="pt-BR">
  <head>
-  <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <title>Carsby Notícias - Registros de Desaparecimentos</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-    rel="stylesheet"
-  />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto+Slab&family=Open+Sans&display=swap"
-    rel="stylesheet"
-  />
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Sombras de Carsby
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
   <style>
-    body {
-      font-family: "Open Sans", sans-serif;
+   body {
+      font-family: 'Playfair Display', serif;
+      background-color: #000000;
+      color: #f0f0f0;
+      overflow-x: hidden;
     }
-    h1,
-    h2,
-    h3 {
-      font-family: "Roboto Slab", serif;
-    }
-    /* Animation for fade-in and slide-up */
-    .fade-slide-up {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 1.2s ease-out, transform 1.2s ease-out;
-    }
-    .fade-slide-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    /* Modal background */
-    #modal-bg {
-      background-color: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(4px);
-    }
-    /* Hamburger animation */
-    .hamburger {
-      width: 24px;
-      height: 18px;
+    /* Glitch effect */
+    .glitch {
       position: relative;
-      cursor: pointer;
-      display: inline-block;
+      color: #f0f0f0;
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: 0.05em;
     }
-    .hamburger span {
-      background: white;
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
       position: absolute;
-      height: 3px;
-      width: 100%;
-      border-radius: 2px;
-      opacity: 1;
       left: 0;
-      transition: all 0.4s ease-in-out;
+      width: 100%;
+      overflow: hidden;
+      clip: rect(0, 900px, 0, 0);
     }
-    .hamburger span:nth-child(1) {
+    .glitch::before {
+      animation: glitchTop 2s infinite linear alternate-reverse;
+      color: #ff00c8;
+      z-index: -1;
+    }
+    .glitch::after {
+      animation: glitchBottom 2s infinite linear alternate-reverse;
+      color: #00fff9;
+      z-index: -2;
+    }
+    @keyframes glitchTop {
+      0% {
+        clip: rect(0, 900px, 0, 0);
+        transform: translate(0);
+      }
+      10% {
+        clip: rect(0, 900px, 10px, 0);
+        transform: translate(-2px, -2px);
+      }
+      20% {
+        clip: rect(0, 900px, 0, 0);
+        transform: translate(0);
+      }
+      30% {
+        clip: rect(0, 900px, 8px, 0);
+        transform: translate(-2px, 0);
+      }
+      40% {
+        clip: rect(0, 900px, 0, 0);
+        transform: translate(0);
+      }
+      100% {
+        clip: rect(0, 900px, 0, 0);
+        transform: translate(0);
+      }
+    }
+    @keyframes glitchBottom {
+      0% {
+        clip: rect(0, 900px, 0, 0);
+        transform: translate(0);
+      }
+      10% {
+        clip: rect(5px, 900px, 15px, 0);
+        transform: translate(2px, 2px);
+      }
+      20% {
+        clip: rect(0, 900px, 0, 0);
+        transform: translate(0);
+      }
+      30% {
+        clip: rect(7px, 900px, 15px, 0);
+        transform: translate(2px, 0);
+      }
+      40% {
+        clip: rect(0, 900px, 0, 0);
+        transform: translate(0);
+      }
+      100% {
+        clip: rect(0, 900px, 0, 0);
+        transform: translate(0);
+      }
+    }
+    /* Lantern */
+    #lantern {
+      position: fixed;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      filter: drop-shadow(0 0 8px #fff);
+      transition: transform 0.1s ease-out;
+      z-index: 9999;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(0,0,0,0) 70%);
+      box-shadow: 0 0 40px 20px rgba(255,255,255,0.15);
+      pointer-events: none;
+    }
+    /* Rain animation */
+    .rain {
+      pointer-events: none;
+      position: fixed;
       top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 999;
+      overflow: hidden;
     }
-    .hamburger span:nth-child(2) {
-      top: 7.5px;
+    .raindrop {
+      position: absolute;
+      bottom: 100%;
+      width: 2px;
+      height: 15px;
+      background: rgba(255, 255, 255, 0.15);
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 2px #a0c8ff);
     }
-    .hamburger span:nth-child(3) {
-      top: 15px;
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+      }
     }
-    .hamburger.open span:nth-child(1) {
-      top: 7.5px;
-      transform: rotate(45deg);
-    }
-    .hamburger.open span:nth-child(2) {
+    /* Spark effect */
+    .spark {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: #ff00c8;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 6px #ff00c8);
       opacity: 0;
-      left: -60px;
+      animation: sparkAnim 2s infinite;
+      pointer-events: none;
+      z-index: 9999;
     }
-    .hamburger.open span:nth-child(3) {
-      top: 7.5px;
-      transform: rotate(-45deg);
+    @keyframes sparkAnim {
+      0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0.5);
+      }
+      50% {
+        opacity: 1;
+        transform: translate(5px, -5px) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(10px, 0) scale(0.5);
+      }
     }
-    /* Scrollbar for modal content */
-    #modal-content::-webkit-scrollbar {
+    /* Corrupted link glitch */
+    .corrupted-link {
+      color: #ff00c8;
+      font-weight: 700;
+      text-decoration: none;
+      position: relative;
+      display: inline-block;
+      letter-spacing: 0.1em;
+      font-size: 1.125rem;
+    }
+    .corrupted-link::before,
+    .corrupted-link::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      clip: rect(0, 900px, 0, 0);
+      opacity: 0.7;
+    }
+    .corrupted-link::before {
+      animation: glitchTop 1.5s infinite linear alternate-reverse;
+      color: #00fff9;
+      z-index: -1;
+    }
+    .corrupted-link::after {
+      animation: glitchBottom 1.5s infinite linear alternate-reverse;
+      color: #ff00c8;
+      z-index: -2;
+    }
+    .corrupted-link:hover {
+      text-decoration: underline;
+      color: #fff;
+    }
+    /* Scrollbar */
+    ::-webkit-scrollbar {
       width: 8px;
     }
-    #modal-content::-webkit-scrollbar-thumb {
-      background-color: rgba(107, 114, 128, 0.5);
+    ::-webkit-scrollbar-track {
+      background: #111;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #444;
       border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #666;
+    }
+    /* Modal styles */
+    .modal-bg {
+      background-color: rgba(0,0,0,0.85);
+      backdrop-filter: blur(6px);
     }
   </style>
  </head>
- <body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
-  <header
-    class="bg-blue-900 text-white shadow-md sticky top-0 z-50"
-    role="banner"
-  >
-    <div
-      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16"
-    >
-      <div class="flex items-center space-x-3">
-        <i class="fas fa-newspaper fa-2x text-yellow-400"></i>
-        <h1 class="text-2xl font-bold tracking-wide select-none">Carsby Notícias</h1>
-      </div>
-      <nav
-        class="hidden md:flex space-x-8 font-semibold text-lg"
-        role="navigation"
-        aria-label="Menu principal"
-      >
-        <a
-          class="hover:text-yellow-400 transition-colors"
-          href="#desaparecidos"
-          >Desaparecidos</a
-        >
-        <a
-          class="hover:text-yellow-400 transition-colors"
-          href="#catedral"
-          >Catedral de St. Mary</a
-        >
-        <a
-          class="hover:text-yellow-400 transition-colors"
-          href="#mandado"
-          >Mandado de Busca</a
-        >
-        <a
-          class="hover:text-yellow-400 transition-colors"
-          href="#documento"
-          >Documento 1925</a
-        >
-      </nav>
-      <button
-        aria-label="Abrir menu"
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-        class="md:hidden focus:outline-none focus:ring-2 focus:ring-yellow-400"
-        id="menu-btn"
-      >
-        <div class="hamburger" id="hamburger-icon" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </button>
-    </div>
-    <nav
-      aria-label="Menu móvel"
-      class="md:hidden bg-blue-800 text-white px-4 py-3 space-y-2 hidden"
-      id="mobile-menu"
-    >
-      <a
-        class="block py-1 font-semibold hover:text-yellow-400 transition-colors"
-        href="#desaparecidos"
-        >Desaparecidos</a
-      >
-      <a
-        class="block py-1 font-semibold hover:text-yellow-400 transition-colors"
-        href="#catedral"
-        >Catedral de St. Mary</a
-      >
-      <a
-        class="block py-1 font-semibold hover:text-yellow-400 transition-colors"
-        href="#mandado"
-        >Mandado de Busca</a
-      >
-      <a
-        class="block py-1 font-semibold hover:text-yellow-400 transition-colors"
-        href="#documento"
-        >Documento 1925</a
-      >
-    </nav>
-  </header>
-  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-    <section class="mb-16" id="desaparecidos">
-      <h2
-        class="text-4xl font-bold mb-6 border-b-4 border-yellow-400 inline-block pb-2"
-      >
-        Registros de Desaparecimentos
-      </h2>
-      <ul class="space-y-8">
-        <!-- Each item clickable with fade-slide-up animation -->
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Ginny Palmer"
-          data-age="7"
-          data-year="1887"
-          data-summary="Desapareceu enquanto colhia flores."
-          data-details="O cesto foi encontrado flutuando no rio."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Ginny Palmer, 7 anos – 1887
-            </h3>
-            <p class="text-gray-700 italic mb-1">
-              Desapareceu enquanto colhia flores.
-            </p>
-            <p class="text-gray-600">O cesto foi encontrado flutuando no rio.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Harrison Little"
-          data-age="7"
-          data-year="1890"
-          data-summary="Corria em círculos no campo até cair."
-          data-details="Quando a mãe chegou, só havia a grama amassada."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Harrison Little, 7 anos – 1890
-            </h3>
-            <p class="text-gray-700 italic mb-1">Corria em círculos no campo até cair.</p>
-            <p class="text-gray-600">
-              Quando a mãe chegou, só havia a grama amassada.
-            </p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Amelia Baines"
-          data-age="11"
-          data-year="1893"
-          data-summary="Sumiu após sair da escola dominical."
-          data-details="Seus sapatos foram encontrados na beira do riacho."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Amelia Baines, 11 anos – 1893
-            </h3>
-            <p class="text-gray-700 italic mb-1">Sumiu após sair da escola dominical.</p>
-            <p class="text-gray-600">
-              Seus sapatos foram encontrados na beira do riacho.
-            </p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Harold Greaves"
-          data-age="11"
-          data-year="1895"
-          data-summary="Desapareceu ao buscar água no poço."
-          data-details="Corda do balde estava rasgada."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Harold Greaves, 11 anos – 1895
-            </h3>
-            <p class="text-gray-700 italic mb-1">Desapareceu ao buscar água no poço.</p>
-            <p class="text-gray-600">Corda do balde estava rasgada.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Kenneth Brewer"
-          data-age="11"
-          data-year="1899"
-          data-summary="Sumiu durante o jantar."
-          data-details="A cadeira ainda estava quente quando a mãe notou."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Kenneth Brewer, 11 anos – 1899
-            </h3>
-            <p class="text-gray-700 italic mb-1">Sumiu durante o jantar.</p>
-            <p class="text-gray-600">
-              A cadeira ainda estava quente quando a mãe notou.
-            </p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Clara Wendell"
-          data-age="6"
-          data-year="1900"
-          data-summary="Ao olhar para dentro de um armário, gritou uma única vez."
-          data-details="Desapareceu sem deixar rastro."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Clara Wendell, 6 anos – 1900
-            </h3>
-            <p class="text-gray-700 italic mb-1">
-              Ao olhar para dentro de um armário, gritou uma única vez.
-            </p>
-            <p class="text-gray-600">Desapareceu sem deixar rastro.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Daniel Whitmore"
-          data-age="9"
-          data-year="1902"
-          data-summary="Visto pela última vez no sótão da casa dos avós."
-          data-details="Nunca mais desceu."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Daniel Whitmore, 9 anos – 1902
-            </h3>
-            <p class="text-gray-700 italic mb-1">
-              Visto pela última vez no sótão da casa dos avós.
-            </p>
-            <p class="text-gray-600">Nunca mais desceu.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Tobias Heller"
-          data-age="13"
-          data-year="1903"
-          data-summary="Afirmava que ‘o chão respira à noite’."
-          data-details="Desapareceu em sua própria cama."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Tobias Heller, 13 anos – 1903
-            </h3>
-            <p class="text-gray-700 italic mb-1">Afirmava que ‘o chão respira à noite’.</p>
-            <p class="text-gray-600">Desapareceu em sua própria cama.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Gordon Fray"
-          data-age="14"
-          data-year="1904"
-          data-summary="Trabalhava na estação de trem."
-          data-details="Visto pela última vez conversando com um ‘senhor elegante de cartola’."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Gordon Fray, 14 anos – 1904
-            </h3>
-            <p class="text-gray-700 italic mb-1">Trabalhava na estação de trem.</p>
-            <p class="text-gray-600">
-              Visto pela última vez conversando com um ‘senhor elegante de cartola’.
-            </p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Emily Swann"
-          data-age="6"
-          data-year="1905"
-          data-summary="Última vista cantando sozinha perto do moinho."
-          data-details="Canção foi ouvida por horas depois, mesmo sem ninguém lá."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Emily Swann, 6 anos – 1905
-            </h3>
-            <p class="text-gray-700 italic mb-1">
-              Última vista cantando sozinha perto do moinho.
-            </p>
-            <p class="text-gray-600">
-              Canção foi ouvida por horas depois, mesmo sem ninguém lá.
-            </p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Nora Finch"
-          data-age="7"
-          data-year="1906"
-          data-summary="Desapareceu após relatar pesadelos constantes com ‘o sussurro nas paredes’."
-          data-details=""
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Nora Finch, 7 anos – 1906
-            </h3>
-            <p class="text-gray-700 italic mb-1">
-              Desapareceu após relatar pesadelos constantes com ‘a voz nas paredes’.
-            </p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Lucinda Marr"
-          data-age="13"
-          data-year="1907"
-          data-summary="Sumiu ao visitar a casa da tia."
-          data-details="Parentes relataram sentir forte cheiro de enxofre."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Lucinda Marr, 13 anos – 1907
-            </h3>
-            <p class="text-gray-700 italic mb-1">Sumiu ao visitar a casa da tia.</p>
-            <p class="text-gray-600">Parentes relataram sentir forte cheiro de enxofre.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Florence Gibb"
-          data-age="8"
-          data-year="1908"
-          data-summary="Alegava conversar com ‘o homem de olhos brilhantes no espelho’."
-          data-details="Sumiu durante a noite."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Florence Gibb, 8 anos – 1908
-            </h3>
-            <p class="text-gray-700 italic mb-1">
-              Alegava conversar com ‘o homem de olhos brilhantes no espelho’.
-            </p>
-            <p class="text-gray-600">Sumiu durante a noite.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Frankie Rowe"
-          data-age="12"
-          data-year="1910"
-          data-summary="Última vez visto seguindo um estranho até a floresta."
-          data-details=""
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Frankie Rowe, 12 anos – 1910
-            </h3>
-            <p class="text-gray-700 italic mb-1">
-              Última vez visto seguindo um estranho até a floresta.
-            </p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Lucy Mayfield"
-          data-age="7"
-          data-year="1911"
-          data-summary="Brincava com um pião na calçada."
-          data-details="Testemunhas dizem que ela ‘simplesmente apagou’."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Lucy Mayfield, 7 anos – 1911
-            </h3>
-            <p class="text-gray-700 italic mb-1">Brincava com um pião na calçada.</p>
-            <p class="text-gray-600">Testemunhas dizem que ela ‘simplesmente apagou’.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Ivy Peterson"
-          data-age="12"
-          data-year="1912"
-          data-summary="Sumiu durante piquenique em família."
-          data-details="Sombras nas fotos parecem diferentes de pessoa para pessoa."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Ivy Peterson, 12 anos – 1912
-            </h3>
-            <p class="text-gray-700 italic mb-1">Sumiu durante piquenique em família.</p>
-            <p class="text-gray-600">
-              Sombras nas fotos parecem diferentes de pessoa para pessoa.
-            </p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Opal Merritt"
-          data-age="9"
-          data-year="1913"
-          data-summary="Desapareceu ao visitar o túmulo da avó."
-          data-details="O túmulo estava aberto na manhã seguinte."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Opal Merritt, 9 anos – 1913
-            </h3>
-            <p class="text-gray-700 italic mb-1">Desapareceu ao visitar o túmulo da avó.</p>
-            <p class="text-gray-600">O túmulo estava aberto na manhã seguinte.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Miles Redford"
-          data-age="14"
-          data-year="1915"
-          data-summary="Desapareceu durante nevasca."
-          data-details="Últimas pegadas iam em direção ao campo aberto… e paravam."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Miles Redford, 14 anos – 1915
-            </h3>
-            <p class="text-gray-700 italic mb-1">Desapareceu durante nevasca.</p>
-            <p class="text-gray-600">
-              Últimas pegadas iam em direção ao campo aberto… e paravam.
-            </p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Marjorie Kent"
-          data-age="12"
-          data-year="1917"
-          data-summary="Sumiu durante a missa de Páscoa."
-          data-details="Cadeira na igreja continuou vazia todos os domingos seguintes."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Marjorie Kent, 12 anos – 1917
-            </h3>
-            <p class="text-gray-700 italic mb-1">Sumiu durante a missa de Páscoa.</p>
-            <p class="text-gray-600">
-              Cadeira na igreja continuou vazia todos os domingos seguintes.
-            </p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Percy Marsh"
-          data-age="12"
-          data-year="1919"
-          data-summary="Desapareceu em pleno almoço."
-          data-details="Garfo ainda estava em sua mão, mas ele não estava mais lá."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Percy Marsh, 12 anos – 1919
-            </h3>
-            <p class="text-gray-700 italic mb-1">Desapareceu em pleno almoço.</p>
-            <p class="text-gray-600">
-              Garfo ainda estava em sua mão, mas ele não estava mais lá.
-            </p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Samuel Brice"
-          data-age="9"
-          data-year="1936"
-          data-summary="Última vez visto correndo para o bosque atrás de um vulto escuro."
-          data-details=""
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Samuel Brice, 9 anos – 1936
-            </h3>
-            <p class="text-gray-700 italic mb-1">
-              Última vez visto correndo para o bosque atrás de um vulto escuro.
-            </p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Helen Dorsey"
-          data-age="9"
-          data-year="1937"
-          data-summary="Corria atrás de uma pipa."
-          data-details="Vento parou abruptamente. Ela nunca mais foi vista."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Helen Dorsey, 9 anos – 1937
-            </h3>
-            <p class="text-gray-700 italic mb-1">Corria atrás de uma pipa.</p>
-            <p class="text-gray-600">Vento parou abruptamente. Ela nunca mais foi vista.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Clive Harrow"
-          data-age="15"
-          data-year="1938"
-          data-summary="Entrou no teatro antigo com amigos."
-          data-details="Nunca saiu. Ninguém notou sua ausência até o fim do filme."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Clive Harrow, 15 anos – 1938
-            </h3>
-            <p class="text-gray-700 italic mb-1">Entrou no teatro antigo com amigos.</p>
-            <p class="text-gray-600">
-              Nunca saiu. Ninguém notou sua ausência até o fim do filme.
-            </p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Bobby Elm"
-          data-age="10"
-          data-year="1941"
-          data-summary="Foi pescar no lago."
-          data-details="O barco estava à deriva. Nenhum sinal de Bobby."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">Bobby Elm, 10 anos – 1941</h3>
-            <p class="text-gray-700 italic mb-1">Foi pescar no lago.</p>
-            <p class="text-gray-600">O barco estava à deriva. Nenhum sinal de Bobby.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Dennis Floyd"
-          data-age="10"
-          data-year="1943"
-          data-summary="Desapareceu após cair de bicicleta."
-          data-details="Bicicleta estava de pé, apoiada no meio da rua."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Dennis Floyd, 10 anos – 1943
-            </h3>
-            <p class="text-gray-700 italic mb-1">Desapareceu após cair de bicicleta.</p>
-            <p class="text-gray-600">Bicicleta estava de pé, apoiada no meio da rua.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Daisy Law"
-          data-age="6"
-          data-year="1944"
-          data-summary="Brincava com bonecas no quintal."
-          data-details="A boneca foi encontrada pendurada na árvore."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">Daisy Law, 6 anos – 1944</h3>
-            <p class="text-gray-700 italic mb-1">Brincava com bonecas no quintal.</p>
-            <p class="text-gray-600">A boneca foi encontrada pendurada na árvore.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Tommy Greer"
-          data-age="10"
-          data-year="1947"
-          data-summary="Falava de um amigo que ‘vive embaixo da casa’."
-          data-details="Ninguém acreditou. Depois sumiu."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">Tommy Greer, 10 anos – 1947</h3>
-            <p class="text-gray-700 italic mb-1">Falava de um amigo que ‘vive embaixo da casa’.</p>
-            <p class="text-gray-600">Ninguém acreditou. Depois sumiu.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Annabelle Rhodes"
-          data-age="9"
-          data-year="1950"
-          data-summary="Desapareceu na loja de departamentos."
-          data-details="Última imagem: parada, olhando fixamente para o espelho."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Annabelle Rhodes, 9 anos – 1950
-            </h3>
-            <p class="text-gray-700 italic mb-1">Desapareceu na loja de departamentos.</p>
-            <p class="text-gray-600">
-              Última imagem: parada, olhando fixamente para o espelho.
-            </p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Joseph Blight"
-          data-age="13"
-          data-year="1951"
-          data-summary="Entrou em um túnel abandonado."
-          data-details="Nunca saiu. Corpo nunca encontrado."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">Joseph Blight, 13 anos – 1951</h3>
-            <p class="text-gray-700 italic mb-1">Entrou em um túnel abandonado.</p>
-            <p class="text-gray-600">Nunca saiu. Corpo nunca encontrado.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Iris Talbot"
-          data-age="12"
-          data-year="1952"
-          data-summary="Última vista lendo um livro na biblioteca antiga."
-          data-details="Livro ficou aberto na página 37."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">Iris Talbot, 12 anos – 1952</h3>
-            <p class="text-gray-700 italic mb-1">Última vista lendo um livro na biblioteca antiga.</p>
-            <p class="text-gray-600">Livro ficou aberto na página 37.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Cynthia Meriwether"
-          data-age="8"
-          data-year="1953"
-          data-summary="Foi vista pela última vez brincando no quintal."
-          data-details="Os pais não registraram o desaparecimento até uma semana depois."
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Cynthia Meriwether, 8 anos – 1953
-            </h3>
-            <p class="text-gray-700 italic mb-1">Foi vista pela última vez brincando no quintal.</p>
-            <p class="text-gray-600">
-              Os pais não registraram o desaparecimento até uma semana depois.
-            </p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Travis O’Donnell"
-          data-age="12"
-          data-year="1961"
-          data-summary="Última vez visto saindo da escola."
-          data-details=""
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">Travis O’Donnell, 12 anos – 1961</h3>
-            <p class="text-gray-700 italic mb-1">Última vez visto saindo da escola.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Nellie Hargrove"
-          data-age="9"
-          data-year="1987"
-          data-summary="Última vez vista sentada em sua cama, rindo para o canto escuro do quarto. A mãe ouviu a risada durante a madrugada e encontrou a janela aberta. Havia marcas estranhas no chão, desenhos com figuras distorcidas e uma presença que ninguém conseguiu explicar. A menina deixou para trás apenas um giz de cera vermelho — arrastado alguns centímetros, como se tivesse sido puxado por dedos invisíveis. A casa nunca mais foi a mesma."
-          data-details=""
-          data-category="desaparecidos"
-        >
-          <i
-            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">Nellie Hargrove, 9 anos – 1987</h3>
-            <p class="text-gray-700 italic mb-1">Última vez vista sentada em sua cama, rindo para o canto escuro do quarto. A mãe ouviu a risada durante a madrugada e encontrou a janela aberta. Havia marcas estranhas no chão, desenhos com figuras distorcidas e uma presença que ninguém conseguiu explicar. A menina deixou para trás apenas um giz de cera vermelho — arrastado alguns centímetros, como se tivesse sido puxado por dedos invisíveis. A casa nunca mais foi a mesma.
-
-            </p>
-          </div>
-        </li>
-      </ul>
-    </section>
-    <section class="mb-16" id="catedral">
-      <h2
-        class="text-4xl font-bold mb-6 border-b-4 border-yellow-400 inline-block pb-2"
-      >
-        Desaparecimentos relacionados à Catedral de St. Mary
-      </h2>
-      <ul class="space-y-8">
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Matthew Grayson"
-          data-age="11"
-          data-year="1920"
-          data-summary="Desapareceu em 1920."
-          data-details="Última vez visto perto da Catedral de St. Mary."
-          data-category="catedral"
-        >
-          <i
-            class="fas fa-church fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Matthew Grayson, 11 anos – 1920
-            </h3>
-            <p class="text-gray-700 italic mb-1">Desapareceu em 1920.</p>
-            <p class="text-gray-600">Última vez visto perto da Catedral de St. Mary.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Clara Jensen"
-          data-age="13"
-          data-year="1920"
-          data-summary="Desapareceu na Catedral de St. Mary."
-          data-details=""
-          data-category="catedral"
-        >
-          <i
-            class="fas fa-church fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Clara Jensen, 13 anos – 1920
-            </h3>
-            <p class="text-gray-700 italic mb-1">Desapareceu na Catedral de St. Mary.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Samuel Finch"
-          data-age="10"
-          data-year="1921"
-          data-summary="Última vez visto próximo à catedral."
-          data-details=""
-          data-category="catedral"
-        >
-          <i
-            class="fas fa-church fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Samuel Finch, 10 anos – 1921
-            </h3>
-            <p class="text-gray-700 italic mb-1">Última vez visto próximo à catedral.</p>
-          </div>
-        </li>
-        <li
-          tabindex="0"
-          role="button"
-          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
-          data-name="Erik Lawson"
-          data-age="14"
-          data-year="1922"
-          data-summary="Última vez visto perto da Catedral de St. Mary."
-          data-details=""
-          data-category="catedral"
-        >
-          <i
-            class="fas fa-church fa-3x text-blue-700 flex-shrink-0 mt-1"
-            aria-hidden="true"
-          ></i>
-          <div>
-            <h3 class="text-2xl font-semibold text-blue-900">
-              Erik Lawson, 14 anos – 1922
-            </h3>
-            <p class="text-gray-700 italic mb-1">
-              Última vez visto perto da Catedral de St. Mary.
-            </p>
-          </div>
-        </li>
-      </ul>
-    </section>
-    <section class="mb-16" id="mandado">
-      <h2
-        class="text-4xl font-bold mb-6 border-b-4 border-yellow-400 inline-block pb-2"
-      >
-        Mandado de Busca - 1920
-      </h2>
-      <div
-        class="bg-white rounded-lg shadow-md p-8 max-w-3xl mx-auto text-center"
-        tabindex="0"
-      >
-        <i class="fas fa-search fa-6x text-blue-700 mb-6 mx-auto"></i>
-        <p class="text-gray-800 text-lg mb-4">
-          "Oito oficiais enviados para inspeção na Catedral de St. Mary na noite
-          de 3 de outubro de 1920."
-        </p>
-        <p class="text-gray-800 text-lg mb-4">
-          "Os oficiais desapareceram sem deixar rastros. Nenhum corpo encontrado.
-          Nenhuma evidência recuperada. Caso arquivado em 1921."
-        </p>
-      </div>
-    </section>
-    <section class="mb-16" id="documento">
-      <h2
-        class="text-4xl font-bold mb-6 border-b-4 border-yellow-400 inline-block pb-2"
-      >
-        Documento de 1925
-      </h2>
-      <div
-        class="bg-white rounded-lg shadow-md p-8 max-w-3xl mx-auto text-center"
-        tabindex="0"
-      >
-        <i class="fas fa-file-alt fa-6x text-blue-700 mb-6 mx-auto"></i>
-        <p class="text-gray-800 text-lg italic">"Nenhum oficial recorda o ocorrido."</p>
-      </div>
-    </section>
-  </main>
-
-  <!-- Modal -->
-  <div
-    id="modal-bg"
-    class="fixed inset-0 hidden items-center justify-center z-60"
-    aria-hidden="true"
-    role="dialog"
-    aria-modal="true"
-  >
-    <div
-      id="modal-content"
-      class="bg-white rounded-lg shadow-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto p-8 relative"
-      tabindex="0"
-    >
-      <button
-        id="modal-close"
-        aria-label="Fechar detalhes"
-        class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded"
-      >
-        <i class="fas fa-times fa-lg"></i>
-      </button>
-      <h3 id="modal-title" class="text-3xl font-bold text-blue-900 mb-4"></h3>
-      <p id="modal-summary" class="text-lg italic text-gray-700 mb-4"></p>
-      <p id="modal-details" class="text-gray-800 text-base whitespace-pre-line"></p>
-    </div>
+ <body class="relative min-h-screen flex flex-col">
+  <!-- Rain container -->
+  <div aria-hidden="true" class="rain" id="rain">
   </div>
+  <!-- Lantern effect -->
+  <div aria-hidden="true" id="lantern">
+  </div>
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-black bg-opacity-90 backdrop-blur-sm border-b border-gray-800">
+   <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between py-4">
+    <a class="text-white text-3xl font-bold tracking-wide select-none" href="#home">
+     Sombras de Carsby
+    </a>
+    <ul class="flex flex-wrap gap-6 text-white text-lg font-semibold">
+     <li>
+      <a class="hover:text-pink-500 transition" href="#arquivo">
+       📰 Arquivos
+      </a>
+     </li>
+     <li>
+      <a class="hover:text-pink-500 transition" href="#mapa">
+       📍 Mapa de Carsby
+      </a>
+     </li>
+     <li>
+      <a class="hover:text-pink-500 transition" href="#dossie">
+       📁 Dossiê ANNWN
+      </a>
+     </li>
+     <li>
+      <a class="hover:text-pink-500 transition" href="#conexao">
+       🔗 Conexão com o Inferno
+      </a>
+     </li>
+    </ul>
+   </nav>
+  </header>
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-20">
+   <!-- Home / Intro -->
+   <section class="text-center max-w-3xl mx-auto" id="home">
+    <h1 class="text-5xl font-extrabold glitch" data-text="Sombras de Carsby">
+     Sombras de Carsby
+    </h1>
+    <p class="mt-6 text-lg leading-relaxed max-w-xl mx-auto text-gray-300">
+     Portal de entrada para o universo narrativo de mistério e sombras. Explore os arquivos, mapas e segredos da cidade de Carsby, onde o passado e o presente se entrelaçam em uma atmosfera retrô-dark.
+    </p>
+   </section>
+   <!-- Arquivo das Sombras -->
+   <section class="space-y-8" id="arquivo">
+    <h2 class="text-4xl font-bold border-b border-pink-600 pb-2 max-w-max mx-auto glitch" data-text="📰 Arquivo das Sombras">
+     📰 Arquivos
+    </h2>
+    <div class="space-y-10 max-w-4xl mx-auto text-gray-300">
+     <article class="border border-gray-700 rounded-lg p-6 bg-black bg-opacity-60 shadow-md" tabindex="0">
+      <h3 class="text-2xl font-semibold mb-3 glitch" data-text="🕯️ Julho de 1951 — Garoto some durante encenação de peça escolar; palco foi encontrado encharcado">
+       🕯️ Julho de 1951 — “Garoto some durante encenação de peça escolar; palco foi encontrado encharcado”
+      </h3>
+      <p class="mb-3">
+       Na última sexta-feira, durante os ensaios finais de “A Tempestade” na escola Eastbridge Middle School, o pequeno Benjamin Griggs, de 9 anos, desapareceu após ser chamado para seu monólogo.<br/>
+       O palco ficou vazio. As cortinas começaram a se mover por conta própria.<br/>
+       E havia água — muita água — escorrendo pelas tábuas secas.<br/>
+       A diretora jurou ter ouvido uma voz grave dizendo: “As palavras afogam, se você não aprender a engolir.”
+      </p>
+      <button aria-label="Ler mais sobre Garoto some durante encenação de peça escolar" class="read-more-btn mt-3 inline-block text-pink-600 font-semibold hover:underline cursor-pointer" data-article="benjamin">
+       Ler mais →
+      </button>
+     </article>
+     <article class="border border-gray-700 rounded-lg p-6 bg-black bg-opacity-60 shadow-md" tabindex="0">
+      <h3 class="text-2xl font-semibold mb-3 glitch" data-text="🌘 Outubro de 1963 — Família desaparece no jantar; mesa posta e lareira acesa">
+       🌘 Outubro de 1963 — “Família desaparece no jantar; mesa posta e lareira acesa”
+      </h3>
+      <p class="mb-3">
+       A família Crawford, conhecida na vizinhança por sua pontualidade quase obsessiva, não foi vista desde a noite do dia 14.<br/>
+       Vizinhos relatam ter ouvido o som de talheres batendo no prato até por volta das 20h.<br/>
+       A polícia encontrou a casa trancada por dentro.<br/>
+       A sopa ainda estava quente.<br/>
+       E cada prato tinha uma colher flutuando em círculo.
+      </p>
+      <button aria-label="Ler mais sobre Família desaparece no jantar" class="read-more-btn mt-3 inline-block text-pink-600 font-semibold hover:underline cursor-pointer" data-article="crawford">
+       Ler mais →
+      </button>
+     </article>
+     <article class="border border-gray-700 rounded-lg p-6 bg-black bg-opacity-60 shadow-md" tabindex="0">
+      <h3 class="text-2xl font-semibold mb-3 glitch" data-text="🎠 Maio de 1924 — Menina desaparece em carrossel desligado há décadas">
+       🎠 Maio de 1924 — “Menina desaparece em carrossel desligado há décadas”
+      </h3>
+      <p class="mb-3">
+       Durante um passeio de classe no antigo parque Black Pines, fechado desde 1911, Ruthie Cormack, 8 anos, foi vista por última vez sorrindo para algo atrás do espelho do carrossel.<br/>
+       O brinquedo, enferrujado e quebrado, girou por exatamente uma volta.<br/>
+       Depois parou.<br/>
+       A menina sumiu.<br/>
+       Havia uma risada gravada no vinil velho deixado no chão.
+      </p>
+      <button aria-label="Ler mais sobre Menina desaparece em carrossel" class="read-more-btn mt-3 inline-block text-pink-600 font-semibold hover:underline cursor-pointer" data-article="ruthie">
+       Ler mais →
+      </button>
+     </article>
+     <article class="border border-gray-700 rounded-lg p-6 bg-black bg-opacity-60 shadow-md" tabindex="0">
+      <h3 class="text-2xl font-semibold mb-3 glitch" data-text="📻 Dezembro de 1939 — Coral infantil desaparece; padres ouvem canto vindo do solo da catedral">
+       📻 Dezembro de 1939 — “Coral infantil desaparece; padres ouvem canto vindo do solo da catedral”
+      </h3>
+      <p class="mb-3">
+       Na noite de Natal, 12 crianças do coral da Catedral de St. Mary nunca saíram da sacristia.<br/>
+       Na manhã seguinte, os vitrais estavam escurecidos.<br/>
+       E do chão da cripta, ouviu-se um canto — doce, afinado — mas em uma língua que ninguém conseguia identificar.<br/>
+       Um padre arrancou os próprios tímpanos tentando silenciá-lo.
+      </p>
+      <button aria-label="Ler mais sobre Coral infantil desaparece" class="read-more-btn mt-3 inline-block text-pink-600 font-semibold hover:underline cursor-pointer" data-article="coral">
+       Ler mais →
+      </button>
+     </article>
+     <article class="border border-gray-700 rounded-lg p-6 bg-black bg-opacity-60 shadow-md" tabindex="0">
+      <h3 class="text-2xl font-semibold mb-3 glitch" data-text="🪞 Agosto de 1972 — Garoto some após dizer que ‘vê o avesso das pessoas’">
+       🪞 Agosto de 1972 — “Garoto some após dizer que ‘vê o avesso das pessoas’”
+      </h3>
+      <p class="mb-3">
+       Michael Withers, 11 anos, vinha apresentando comportamento estranho, segundo a escola.<br/>
+       Passava horas encarando o espelho do banheiro e dizendo frases como: “Tem mais gente aqui do que lá fora.”<br/>
+       Desapareceu durante uma evacuação simulada.<br/>
+       O espelho do banheiro foi encontrado rachado… por dentro.
+      </p>
+      <button aria-label="Ler mais sobre Garoto some após dizer que vê o avesso das pessoas" class="read-more-btn mt-3 inline-block text-pink-600 font-semibold hover:underline cursor-pointer" data-article="michael">
+       Ler mais →
+      </button>
+     </article>
+     <article class="border border-gray-700 rounded-lg p-6 bg-black bg-opacity-60 shadow-md" tabindex="0">
+      <h3 class="text-2xl font-semibold mb-3 glitch" data-text="🌑 Fevereiro de 1919 — Trilhos do trem engolem menino; trilho continua reto, intacto">
+       🌑 Fevereiro de 1919 — “Trilhos do trem engolem menino; trilho continua reto, intacto”
+      </h3>
+      <p class="mb-3">
+       O pequeno Henry Lowell desapareceu ao brincar nos trilhos próximos ao cemitério velho.<br/>
+       Testemunhas dizem que o viram correr, tropeçar e cair…<br/>
+       Mas não havia buraco.<br/>
+       Os trilhos estavam lisos.<br/>
+       E na pedra mais próxima, alguém havia escrito com prego: “O trem chegou, mesmo sem apitar.”
+      </p>
+      <button aria-label="Ler mais sobre Trilhos do trem engolem menino" class="read-more-btn mt-3 inline-block text-pink-600 font-semibold hover:underline cursor-pointer" data-article="henry">
+       Ler mais →
+      </button>
+     </article>
 
-  <footer class="bg-blue-900 text-white py-6 mt-auto">
-    <div
-      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center"
-    >
-      <p class="text-sm">© 1989 Carsby Notícias. Todos os direitos reservados.</p>
-      <div class="flex space-x-6 mt-3 md:mt-0">
-        <a
-          aria-label="Facebook"
-          class="hover:text-yellow-400 transition-colors"
-          href="https://facebook.com"
-          rel="noopener"
-          target="_blank"
-          ><i class="fab fa-facebook fa-lg"></i
-        ></a>
-        <a
-          aria-label="Twitter"
-          class="hover:text-yellow-400 transition-colors"
-          href="https://twitter.com"
-          rel="noopener"
-          target="_blank"
-          ><i class="fab fa-twitter fa-lg"></i
-        ></a>
-        <a
-          aria-label="Instagram"
-          class="hover:text-yellow-400 transition-colors"
-          href="https://instagram.com"
-          rel="noopener"
-          target="_blank"
-          ><i class="fab fa-instagram fa-lg"></i
-        ></a>
-      </div>
     </div>
+   </section>
+   <!-- Mapa de Carsby -->
+   <section class="space-y-8" id="mapa">
+    <h2 class="text-4xl font-bold border-b border-pink-600 pb-2 max-w-max mx-auto glitch" data-text="📍 Mapa de Carsby">
+     📍 Mapa de Carsby
+    </h2>
+    <div class="relative max-w-4xl mx-auto rounded-lg overflow-hidden border border-gray-700 shadow-lg bg-black bg-opacity-70">
+     <img alt="Mapa antigo e embaçado da cidade de Carsby, com pontos destacados para Floresta, Ferro-velho, Catedral de St. Mary, Escola Holloway e outros locais, em estilo retrô e tons escuros" class="w-full h-auto" height="600" loading="lazy" src="https://storage.googleapis.com/a1aa/image/dde7701b-ebc2-4a84-881b-13b1f4de0577.jpg" usemap="#carsby-map" width="800"/>
+     <map name="carsby-map">
+     </map>
+    </div>
+   </section>
+   <!-- Dossiê ANNWN -->
+   <section class="space-y-8 max-w-3xl mx-auto" id="dossie">
+    <h2 class="text-4xl font-bold border-b border-pink-600 pb-2 max-w-max mx-auto glitch" data-text="📁 Dossiê ANNWN">
+     📁 Dossiê ANNWN
+    </h2>
+    <form aria-label="Área secreta Dossiê ANNWN" class="flex flex-col space-y-4 bg-black bg-opacity-70 border border-gray-700 rounded-lg p-6 shadow-lg" id="password-form">
+     <label class="text-lg font-semibold text-gray-300" for="password">
+      Digite a senha para acessar o Dossiê ANNWN:
+     </label>
+     <input aria-describedby="password-error" aria-required="true" autocomplete="off" class="rounded-md border border-gray-600 bg-black text-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-600" id="password" name="password" type="password"/>
+     <button aria-label="Enviar senha" class="bg-pink-600 hover:bg-pink-700 text-white font-semibold rounded-md px-4 py-2 transition" type="submit">
+      Entrar
+     </button>
+     <p aria-live="assertive" class="text-red-500 text-sm hidden" id="password-error" role="alert">
+     </p>
+    </form>
+    <div aria-live="polite" class="hidden mt-6 bg-black bg-opacity-60 border border-pink-600 rounded-lg p-6 shadow-lg text-gray-300" id="dossie-content" tabindex="0">
+     <h3 class="text-2xl font-semibold mb-4 glitch" data-text="Projeto ANNWN">
+      Projeto ANNWN
+     </h3>
+     <p class="mb-4">
+      O Dossiê ANNWN revela detalhes obscuros sobre um projeto governamental secreto que pode estar ligado aos desaparecimentos em Carsby. Documentos vazados indicam experimentos com dimensões paralelas e interferências na realidade.
+     </p>
+     <img alt="Documento secreto com carimbos oficiais, anotações manuscritas em tinta rosa e gráficos técnicos, estilo retrô-dark" class="w-full rounded-md mb-4" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/58439b58-3720-4a55-e573-5f8a1e149a8a.jpg" width="600"/>
+     <p>
+      Acredita-se que o projeto tenha causado as interferências dimensionais que geram o efeito glitch e as sombras que assombram a cidade.
+     </p>
+    </div>
+   </section>
+   <!-- Conexão com o Inferno -->
+   <section class="space-y-8 max-w-3xl mx-auto text-center" id="conexao">
+    <h2 class="text-4xl font-bold border-b border-pink-600 pb-2 max-w-max mx-auto glitch" data-text="🔗 Conexão com o Inferno">
+     🔗 Conexão com o Inferno
+    </h2>
+    <p class="mt-4 text-gray-400 max-w-prose mx-auto">
+     Site encontrado nos arquivos antigos.
+     <a class="corrupted-link" data-text="Acessar Carsby Notícias" href="noticias.html" rel="noopener noreferrer" target="_blank">
+      Acessar Carsby Notícias
+     </a>
+    </p>
+   </section>
+  </main>
+  <footer class="bg-black bg-opacity-90 border-t border-gray-800 text-gray-500 text-center py-6 select-none">
+   <p>
+    © 1990 Sombras de Carsby. Todos os direitos reservados.
+   </p>
   </footer>
 
-  <script>
-    // Hamburger menu toggle with animation
-    const menuBtn = document.getElementById("menu-btn");
-    const mobileMenu = document.getElementById("mobile-menu");
-    const hamburgerIcon = document.getElementById("hamburger-icon");
+  <!-- Modal -->
+  <div aria-hidden="true" aria-modal="true" class="fixed inset-0 flex items-center justify-center p-4 modal-bg opacity-0 pointer-events-none transition-opacity duration-300" id="modal">
+   <div class="bg-black bg-opacity-90 rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 relative shadow-lg border border-pink-600">
+    <button aria-label="Fechar modal" class="absolute top-4 right-4 text-pink-600 hover:text-pink-400 text-2xl font-bold focus:outline-none" id="modal-close">
+     &times;
+    </button>
+    <div id="modal-content" class="text-gray-300 text-lg leading-relaxed">
+    </div>
+   </div>
+  </div>
 
-    menuBtn.addEventListener("click", () => {
-      mobileMenu.classList.toggle("hidden");
-      hamburgerIcon.classList.toggle("open");
-      const expanded =
-        menuBtn.getAttribute("aria-expanded") === "true" ? "false" : "true";
-      menuBtn.setAttribute("aria-expanded", expanded);
+  <script>
+   // Lantern follows cursor
+    const lantern = document.getElementById('lantern');
+    window.addEventListener('mousemove', (e) => {
+      const x = e.clientX;
+      const y = e.clientY;
+      lantern.style.left = x - lantern.offsetWidth / 2 + 'px';
+      lantern.style.top = y - lantern.offsetHeight / 2 + 'px';
     });
 
-    // Scroll animation for fade-slide-up elements
-    const fadeElements = document.querySelectorAll(".fade-slide-up");
+    // Rain effect
+    const rainContainer = document.getElementById('rain');
+    const raindropCount = 100;
+    for (let i = 0; i < raindropCount; i++) {
+      const drop = document.createElement('div');
+      drop.classList.add('raindrop');
+      drop.style.left = Math.random() * 100 + 'vw';
+      drop.style.animationDuration = 0.5 + Math.random() * 0.7 + 's';
+      drop.style.animationDelay = Math.random() * 2 + 's';
+      drop.style.height = 10 + Math.random() * 10 + 'px';
+      drop.style.width = 1 + Math.random() * 1.5 + 'px';
+      rainContainer.appendChild(drop);
+    }
 
-    const observerOptions = {
-      threshold: 0.1,
+    // Sparks effect - random occasional sparks
+    function createSpark() {
+      const spark = document.createElement('div');
+      spark.classList.add('spark');
+      spark.style.left = Math.random() * window.innerWidth + 'px';
+      spark.style.top = Math.random() * window.innerHeight + 'px';
+      spark.style.animationDuration = 1 + Math.random() * 1 + 's';
+      document.body.appendChild(spark);
+      setTimeout(() => {
+        spark.remove();
+      }, 2000);
+    }
+    setInterval(() => {
+      if (Math.random() < 0.15) {
+        createSpark();
+      }
+    }, 500);
+
+    // Dossiê ANNWN password form
+    const passwordForm = document.getElementById('password-form');
+    const passwordInput = document.getElementById('password');
+    const passwordError = document.getElementById('password-error');
+    const dossieContent = document.getElementById('dossie-content');
+
+    passwordForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const password = passwordInput.value.trim();
+      if (password === 'annwn2024') {
+        passwordError.classList.add('hidden');
+        dossieContent.classList.remove('hidden');
+        passwordForm.classList.add('hidden');
+        dossieContent.focus();
+      } else {
+        passwordError.textContent = 'Senha incorreta. Tente novamente.';
+        passwordError.classList.remove('hidden');
+        passwordInput.focus();
+      }
+    });
+
+    // Modal functionality for "Ler mais"
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+    const modalClose = document.getElementById('modal-close');
+    const readMoreButtons = document.querySelectorAll('.read-more-btn');
+
+    const articlesDetails = {
+      benjamin: `
+        <h2 class="text-3xl font-bold mb-4">🕯️ Julho de 1951 — Garoto some durante encenação de peça escolar; palco foi encontrado encharcado</h2>
+        <p>Benjamin Griggs desapareceu misteriosamente durante os ensaios finais da peça “A Tempestade”. Testemunhas afirmam que, após seu chamado para o monólogo, o palco ficou estranhamente silencioso, exceto pelo som das cortinas que se moviam sozinhas.</p>
+        <p>O palco estava molhado, como se uma inundação tivesse ocorrido, mas não havia sinais de água em outros locais. A diretora relatou ter ouvido uma voz grave e distorcida, dizendo: <em>“As palavras afogam, se você não aprender a engolir.”</em></p>
+        <p>Desde então, ecos de passos e sussurros são ouvidos no teatro abandonado, e sombras parecem se mover entre as cortinas, mesmo quando ninguém está lá.</p>
+        <img alt="Palco antigo de teatro escolar molhado e vazio, com cortinas vermelhas esvoaçantes e iluminação fraca, atmosfera sombria e misteriosa" class="w-full rounded-md my-4" src="https://placehold.co/600x300/png?text=Palco+de+teatro+molhado+e+vazio" loading="lazy"/>
+        <p>Moradores evitam passar perto do teatro à noite, pois dizem que a presença de Benjamin ainda assombra o local, preso entre as palavras não ditas e a água que nunca secou.</p>
+      `,
+      crawford: `
+        <h2 class="text-3xl font-bold mb-4">🌘 Outubro de 1963 — Família desaparece no jantar; mesa posta e lareira acesa</h2>
+        <p>A família Crawford desapareceu misteriosamente durante o jantar. Vizinhos ouviram sons de talheres e pratos até tarde da noite, mas ninguém jamais saiu da casa.</p>
+        <p>A polícia encontrou a residência trancada por dentro, com a mesa posta e a lareira ainda acesa. A sopa estava quente, e cada prato tinha uma colher flutuando lentamente em círculos, como se invisíveis mãos estivessem jantando.</p>
+        <p>Relatos falam de sombras que se movem pelas janelas e sussurros que pedem para “não olhar para trás”. Alguns dizem que a casa ainda emite sons de risadas distorcidas e passos arrastados.</p>
+        <img alt="Mesa de jantar antiga posta com pratos e talheres, lareira acesa ao fundo, ambiente escuro e sombrio" class="w-full rounded-md my-4" src="https://placehold.co/600x300/png?text=Mesa+de+jantar+antiga+posta" loading="lazy"/>
+        <p>Desde então, ninguém ousa se aproximar da casa, que permanece como um monumento silencioso ao desaparecimento inexplicável.</p>
+      `,
+      ruthie: `
+        <h2 class="text-3xl font-bold mb-4">🎠 Maio de 1924 — Menina desaparece em carrossel desligado há décadas</h2>
+        <p>Ruthie Cormack foi vista pela última vez sorrindo para algo atrás do espelho do carrossel enferrujado no parque Holloway, fechado desde 1911.</p>
+        <p>O carrossel girou sozinho por exatamente uma volta antes de parar abruptamente, e Ruthie desapareceu sem deixar vestígios.</p>
+        <p>Uma risada infantil, distorcida e repetitiva, foi gravada em um vinil velho encontrado no chão próximo ao brinquedo, e moradores relatam ouvir o som do carrossel girando em noites silenciosas.</p>
+        <img alt="Carrossel antigo enferrujado e quebrado, com espelhos e luzes apagadas, atmosfera sombria e melancólica" class="w-full rounded-md my-4" src="https://placehold.co/600x300/png?text=Carrossel+antigo+enferrujado" loading="lazy"/>
+        <p>O parque permanece fechado, mas a presença de Ruthie parece ainda brincar entre as sombras, esperando por uma volta que nunca mais virá.</p>
+      `,
+      coral: `
+        <h2 class="text-3xl font-bold mb-4">📻 Dezembro de 1939 — Coral infantil desaparece; padres ouvem canto vindo do solo da catedral</h2>
+        <p>Na noite de Natal, 12 crianças do coral da Catedral de St. Mary desapareceram misteriosamente da sacristia.</p>
+        <p>Na manhã seguinte, os vitrais estavam escurecidos, e um canto doce e afinado, em uma língua desconhecida, ecoava do chão da cripta.</p>
+        <p>Um padre, desesperado para silenciar o som, arrancou os próprios tímpanos, mas o canto persistiu, tornando-se um lamento que assombra a catedral até hoje.</p>
+        <img alt="Interior sombrio da catedral gótica, com vitrais escurecidos e chão de cripta, atmosfera pesada e misteriosa" class="w-full rounded-md my-4" src="https://placehold.co/600x300/png?text=Catedral+sombria+com+vitr%C3%A1is+escurecidos" loading="lazy"/>
+        <p>Visitantes relatam arrepios e vozes sussurrantes, como se o coral ainda cantasse para aqueles que ousam escutar.</p>
+      `,
+      michael: `
+        <h2 class="text-3xl font-bold mb-4">🪞 Agosto de 1972 — Garoto some após dizer que ‘vê o avesso das pessoas’</h2>
+        <p>Michael Withers, 11 anos, apresentava comportamento estranho, passando horas encarando o espelho do banheiro e falando sobre “mais gente aqui do que lá fora”.</p>
+        <p>Durante uma evacuação simulada, desapareceu sem deixar rastros. O espelho do banheiro foi encontrado rachado, mas as rachaduras pareciam vir de dentro para fora.</p>
+        <p>Funcionários da escola relatam que, às vezes, veem reflexos que não correspondem à realidade, e sussurros que alertam para “não confiar no que vê”.</p>
+        <img alt="Espelho antigo rachado com reflexo distorcido, banheiro escolar sombrio e vazio" class="w-full rounded-md my-4" src="https://placehold.co/600x300/png?text=Espelho+rachado+com+reflexo+distorcido" loading="lazy"/>
+        <p>Alguns acreditam que Michael foi puxado para uma dimensão paralela, onde o avesso das pessoas é a única verdade.</p>
+      `,
+      henry: `
+        <h2 class="text-3xl font-bold mb-4">🌑 Fevereiro de 1919 — Trilhos do trem engolem menino; trilho continua reto, intacto</h2>
+        <p>Henry Lowell desapareceu enquanto brincava nos trilhos próximos ao cemitério velho.</p>
+        <p>Testemunhas afirmam que o viram correr, tropeçar e cair, mas não havia buraco ou sinal de queda.</p>
+        <p>Os trilhos permaneciam lisos e intactos, e na pedra próxima, alguém havia gravado com prego: <em>“O trem chegou, mesmo sem apitar.”</em></p>
+        <img alt="Trilhos de trem antigos perto de cemitério, com pedra gravada e atmosfera sombria" class="w-full rounded-md my-4" src="https://placehold.co/600x300/png?text=Trilhos+de+trem+antigos+perto+de+cemit%C3%A9rio" loading="lazy"/>
+        <p>Desde então, moradores evitam os trilhos, temendo que o trem invisível ainda passe, levando consigo aqueles que ousam se aproximar.</p>
+      `,
+      nellie: `
+        <h2 class="text-3xl font-bold mb-4">🔦 Novembro de 1986 — Quatro adolescentes relatam ter visto menina desaparecida ‘rindo de costas’</h2>
+        <p>Quatro adolescentes relataram ter visto Nellie Garner, desaparecida há três semanas, parada na floresta, rindo.</p>
+        <p>O riso vinha do lado oposto ao rosto — ela estava de costas, mas sorria com uma expressão que nenhum deles conseguiu esquecer.</p>
+        <p>Desde então, sons de risadas distorcidas e passos silenciosos são ouvidos na floresta, e sombras parecem seguir aqueles que se aventuram por ali.</p>
+        <img alt="Floresta escura com sombras e luzes tênues, atmosfera assustadora e misteriosa" class="w-full rounded-md my-4" src="https://placehold.co/600x300/png?text=Floresta+escura+com+sombra+misteriosa" loading="lazy"/>
+        <p>Os jovens juram que o riso ainda ecoa, um aviso sombrio para quem ousa olhar para trás.</p>
+      `
     };
 
-    const fadeObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          fadeObserver.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-
-    fadeElements.forEach((el) => {
-      fadeObserver.observe(el);
-    });
-
-    // Modal functionality
-    const modalBg = document.getElementById("modal-bg");
-    const modalTitle = document.getElementById("modal-title");
-    const modalSummary = document.getElementById("modal-summary");
-    const modalDetails = document.getElementById("modal-details");
-    const modalClose = document.getElementById("modal-close");
-
-    function openModal(data) {
-      modalTitle.textContent = `${data.name}, ${data.age} anos – ${data.year}`;
-      modalSummary.textContent = data.summary;
-      modalDetails.textContent = data.details || "";
-      modalBg.classList.remove("hidden");
-      modalBg.classList.add("flex");
-      modalBg.setAttribute("aria-hidden", "false");
-      modalClose.focus();
-      document.body.style.overflow = "hidden";
+    function openModal(articleKey) {
+      modalContent.innerHTML = articlesDetails[articleKey] || '<p>Detalhes indisponíveis.</p>';
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.setAttribute('aria-hidden', 'false');
+      modal.querySelector('button').focus();
+      document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
-      modalBg.classList.add("hidden");
-      modalBg.classList.remove("flex");
-      modalBg.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      modal.setAttribute('aria-hidden', 'true');
+      modalContent.innerHTML = '';
+      document.body.style.overflow = '';
     }
 
-    // Open modal on click or keyboard enter/space
-    document.querySelectorAll("[role=button]").forEach((item) => {
-      item.addEventListener("click", () => {
-        const data = {
-          name: item.getAttribute("data-name"),
-          age: item.getAttribute("data-age"),
-          year: item.getAttribute("data-year"),
-          summary: item.getAttribute("data-summary"),
-          details: item.getAttribute("data-details"),
-          category: item.getAttribute("data-category"),
-        };
-        openModal(data);
-      });
-      item.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          const data = {
-            name: item.getAttribute("data-name"),
-            age: item.getAttribute("data-age"),
-            year: item.getAttribute("data-year"),
-            summary: item.getAttribute("data-summary"),
-            details: item.getAttribute("data-details"),
-            category: item.getAttribute("data-category"),
-          };
-          openModal(data);
-        }
+    readMoreButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const articleKey = btn.getAttribute('data-article');
+        openModal(articleKey);
       });
     });
 
-    // Close modal on close button click or background click or ESC key
-    modalClose.addEventListener("click", closeModal);
-    modalBg.addEventListener("click", (e) => {
-      if (e.target === modalBg) {
+    modalClose.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
         closeModal();
       }
     });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && modalBg.classList.contains("flex")) {
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
         closeModal();
       }
     });
   </script>
  </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

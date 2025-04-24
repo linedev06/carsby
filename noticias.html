@@ -1,0 +1,1260 @@
+
+<html class="scroll-smooth" lang="pt-BR">
+ <head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Carsby Notícias - Registros de Desaparecimentos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto+Slab&family=Open+Sans&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      font-family: "Open Sans", sans-serif;
+    }
+    h1,
+    h2,
+    h3 {
+      font-family: "Roboto Slab", serif;
+    }
+    /* Animation for fade-in and slide-up */
+    .fade-slide-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+    }
+    .fade-slide-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Modal background */
+    #modal-bg {
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+    }
+    /* Hamburger animation */
+    .hamburger {
+      width: 24px;
+      height: 18px;
+      position: relative;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .hamburger span {
+      background: white;
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      border-radius: 2px;
+      opacity: 1;
+      left: 0;
+      transition: all 0.4s ease-in-out;
+    }
+    .hamburger span:nth-child(1) {
+      top: 0;
+    }
+    .hamburger span:nth-child(2) {
+      top: 7.5px;
+    }
+    .hamburger span:nth-child(3) {
+      top: 15px;
+    }
+    .hamburger.open span:nth-child(1) {
+      top: 7.5px;
+      transform: rotate(45deg);
+    }
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+      left: -60px;
+    }
+    .hamburger.open span:nth-child(3) {
+      top: 7.5px;
+      transform: rotate(-45deg);
+    }
+    /* Scrollbar for modal content */
+    #modal-content::-webkit-scrollbar {
+      width: 8px;
+    }
+    #modal-content::-webkit-scrollbar-thumb {
+      background-color: rgba(107, 114, 128, 0.5);
+      border-radius: 4px;
+    }
+  </style>
+ </head>
+ <body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+  <header
+    class="bg-blue-900 text-white shadow-md sticky top-0 z-50"
+    role="banner"
+  >
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16"
+    >
+      <div class="flex items-center space-x-3">
+        <i class="fas fa-newspaper fa-2x text-yellow-400"></i>
+        <h1 class="text-2xl font-bold tracking-wide select-none">Carsby Notícias</h1>
+      </div>
+      <nav
+        class="hidden md:flex space-x-8 font-semibold text-lg"
+        role="navigation"
+        aria-label="Menu principal"
+      >
+        <a
+          class="hover:text-yellow-400 transition-colors"
+          href="#desaparecidos"
+          >Desaparecidos</a
+        >
+        <a
+          class="hover:text-yellow-400 transition-colors"
+          href="#catedral"
+          >Catedral de St. Mary</a
+        >
+        <a
+          class="hover:text-yellow-400 transition-colors"
+          href="#mandado"
+          >Mandado de Busca</a
+        >
+        <a
+          class="hover:text-yellow-400 transition-colors"
+          href="#documento"
+          >Documento 1925</a
+        >
+      </nav>
+      <button
+        aria-label="Abrir menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        class="md:hidden focus:outline-none focus:ring-2 focus:ring-yellow-400"
+        id="menu-btn"
+      >
+        <div class="hamburger" id="hamburger-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </button>
+    </div>
+    <nav
+      aria-label="Menu móvel"
+      class="md:hidden bg-blue-800 text-white px-4 py-3 space-y-2 hidden"
+      id="mobile-menu"
+    >
+      <a
+        class="block py-1 font-semibold hover:text-yellow-400 transition-colors"
+        href="#desaparecidos"
+        >Desaparecidos</a
+      >
+      <a
+        class="block py-1 font-semibold hover:text-yellow-400 transition-colors"
+        href="#catedral"
+        >Catedral de St. Mary</a
+      >
+      <a
+        class="block py-1 font-semibold hover:text-yellow-400 transition-colors"
+        href="#mandado"
+        >Mandado de Busca</a
+      >
+      <a
+        class="block py-1 font-semibold hover:text-yellow-400 transition-colors"
+        href="#documento"
+        >Documento 1925</a
+      >
+    </nav>
+  </header>
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <section class="mb-16" id="desaparecidos">
+      <h2
+        class="text-4xl font-bold mb-6 border-b-4 border-yellow-400 inline-block pb-2"
+      >
+        Registros de Desaparecimentos
+      </h2>
+      <ul class="space-y-8">
+        <!-- Each item clickable with fade-slide-up animation -->
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Ginny Palmer"
+          data-age="7"
+          data-year="1887"
+          data-summary="Desapareceu enquanto colhia flores."
+          data-details="O cesto foi encontrado flutuando no rio."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Ginny Palmer, 7 anos – 1887
+            </h3>
+            <p class="text-gray-700 italic mb-1">
+              Desapareceu enquanto colhia flores.
+            </p>
+            <p class="text-gray-600">O cesto foi encontrado flutuando no rio.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Harrison Little"
+          data-age="7"
+          data-year="1890"
+          data-summary="Corria em círculos no campo até cair."
+          data-details="Quando a mãe chegou, só havia a grama amassada."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Harrison Little, 7 anos – 1890
+            </h3>
+            <p class="text-gray-700 italic mb-1">Corria em círculos no campo até cair.</p>
+            <p class="text-gray-600">
+              Quando a mãe chegou, só havia a grama amassada.
+            </p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Amelia Baines"
+          data-age="11"
+          data-year="1893"
+          data-summary="Sumiu após sair da escola dominical."
+          data-details="Seus sapatos foram encontrados na beira do riacho."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Amelia Baines, 11 anos – 1893
+            </h3>
+            <p class="text-gray-700 italic mb-1">Sumiu após sair da escola dominical.</p>
+            <p class="text-gray-600">
+              Seus sapatos foram encontrados na beira do riacho.
+            </p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Harold Greaves"
+          data-age="11"
+          data-year="1895"
+          data-summary="Desapareceu ao buscar água no poço."
+          data-details="Corda do balde estava rasgada."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Harold Greaves, 11 anos – 1895
+            </h3>
+            <p class="text-gray-700 italic mb-1">Desapareceu ao buscar água no poço.</p>
+            <p class="text-gray-600">Corda do balde estava rasgada.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Kenneth Brewer"
+          data-age="11"
+          data-year="1899"
+          data-summary="Sumiu durante o jantar."
+          data-details="A cadeira ainda estava quente quando a mãe notou."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Kenneth Brewer, 11 anos – 1899
+            </h3>
+            <p class="text-gray-700 italic mb-1">Sumiu durante o jantar.</p>
+            <p class="text-gray-600">
+              A cadeira ainda estava quente quando a mãe notou.
+            </p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Clara Wendell"
+          data-age="6"
+          data-year="1900"
+          data-summary="Ao olhar para dentro de um armário, gritou uma única vez."
+          data-details="Desapareceu sem deixar rastro."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Clara Wendell, 6 anos – 1900
+            </h3>
+            <p class="text-gray-700 italic mb-1">
+              Ao olhar para dentro de um armário, gritou uma única vez.
+            </p>
+            <p class="text-gray-600">Desapareceu sem deixar rastro.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Daniel Whitmore"
+          data-age="9"
+          data-year="1902"
+          data-summary="Visto pela última vez no sótão da casa dos avós."
+          data-details="Nunca mais desceu."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Daniel Whitmore, 9 anos – 1902
+            </h3>
+            <p class="text-gray-700 italic mb-1">
+              Visto pela última vez no sótão da casa dos avós.
+            </p>
+            <p class="text-gray-600">Nunca mais desceu.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Tobias Heller"
+          data-age="13"
+          data-year="1903"
+          data-summary="Afirmava que ‘o chão respira à noite’."
+          data-details="Desapareceu em sua própria cama."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Tobias Heller, 13 anos – 1903
+            </h3>
+            <p class="text-gray-700 italic mb-1">Afirmava que ‘o chão respira à noite’.</p>
+            <p class="text-gray-600">Desapareceu em sua própria cama.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Gordon Fray"
+          data-age="14"
+          data-year="1904"
+          data-summary="Trabalhava na estação de trem."
+          data-details="Visto pela última vez conversando com um ‘senhor elegante de cartola’."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Gordon Fray, 14 anos – 1904
+            </h3>
+            <p class="text-gray-700 italic mb-1">Trabalhava na estação de trem.</p>
+            <p class="text-gray-600">
+              Visto pela última vez conversando com um ‘senhor elegante de cartola’.
+            </p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Emily Swann"
+          data-age="6"
+          data-year="1905"
+          data-summary="Última vista cantando sozinha perto do moinho."
+          data-details="Canção foi ouvida por horas depois, mesmo sem ninguém lá."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Emily Swann, 6 anos – 1905
+            </h3>
+            <p class="text-gray-700 italic mb-1">
+              Última vista cantando sozinha perto do moinho.
+            </p>
+            <p class="text-gray-600">
+              Canção foi ouvida por horas depois, mesmo sem ninguém lá.
+            </p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Nora Finch"
+          data-age="7"
+          data-year="1906"
+          data-summary="Desapareceu após relatar pesadelos constantes com ‘o sussurro nas paredes’."
+          data-details=""
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Nora Finch, 7 anos – 1906
+            </h3>
+            <p class="text-gray-700 italic mb-1">
+              Desapareceu após relatar pesadelos constantes com ‘a voz nas paredes’.
+            </p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Lucinda Marr"
+          data-age="13"
+          data-year="1907"
+          data-summary="Sumiu ao visitar a casa da tia."
+          data-details="Parentes relataram sentir forte cheiro de enxofre."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Lucinda Marr, 13 anos – 1907
+            </h3>
+            <p class="text-gray-700 italic mb-1">Sumiu ao visitar a casa da tia.</p>
+            <p class="text-gray-600">Parentes relataram sentir forte cheiro de enxofre.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Florence Gibb"
+          data-age="8"
+          data-year="1908"
+          data-summary="Alegava conversar com ‘o homem de olhos brilhantes no espelho’."
+          data-details="Sumiu durante a noite."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Florence Gibb, 8 anos – 1908
+            </h3>
+            <p class="text-gray-700 italic mb-1">
+              Alegava conversar com ‘o homem de olhos brilhantes no espelho’.
+            </p>
+            <p class="text-gray-600">Sumiu durante a noite.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Frankie Rowe"
+          data-age="12"
+          data-year="1910"
+          data-summary="Última vez visto seguindo um estranho até a floresta."
+          data-details=""
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Frankie Rowe, 12 anos – 1910
+            </h3>
+            <p class="text-gray-700 italic mb-1">
+              Última vez visto seguindo um estranho até a floresta.
+            </p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Lucy Mayfield"
+          data-age="7"
+          data-year="1911"
+          data-summary="Brincava com um pião na calçada."
+          data-details="Testemunhas dizem que ela ‘simplesmente apagou’."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Lucy Mayfield, 7 anos – 1911
+            </h3>
+            <p class="text-gray-700 italic mb-1">Brincava com um pião na calçada.</p>
+            <p class="text-gray-600">Testemunhas dizem que ela ‘simplesmente apagou’.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Ivy Peterson"
+          data-age="12"
+          data-year="1912"
+          data-summary="Sumiu durante piquenique em família."
+          data-details="Sombras nas fotos parecem diferentes de pessoa para pessoa."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Ivy Peterson, 12 anos – 1912
+            </h3>
+            <p class="text-gray-700 italic mb-1">Sumiu durante piquenique em família.</p>
+            <p class="text-gray-600">
+              Sombras nas fotos parecem diferentes de pessoa para pessoa.
+            </p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Opal Merritt"
+          data-age="9"
+          data-year="1913"
+          data-summary="Desapareceu ao visitar o túmulo da avó."
+          data-details="O túmulo estava aberto na manhã seguinte."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Opal Merritt, 9 anos – 1913
+            </h3>
+            <p class="text-gray-700 italic mb-1">Desapareceu ao visitar o túmulo da avó.</p>
+            <p class="text-gray-600">O túmulo estava aberto na manhã seguinte.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Miles Redford"
+          data-age="14"
+          data-year="1915"
+          data-summary="Desapareceu durante nevasca."
+          data-details="Últimas pegadas iam em direção ao campo aberto… e paravam."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Miles Redford, 14 anos – 1915
+            </h3>
+            <p class="text-gray-700 italic mb-1">Desapareceu durante nevasca.</p>
+            <p class="text-gray-600">
+              Últimas pegadas iam em direção ao campo aberto… e paravam.
+            </p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Marjorie Kent"
+          data-age="12"
+          data-year="1917"
+          data-summary="Sumiu durante a missa de Páscoa."
+          data-details="Cadeira na igreja continuou vazia todos os domingos seguintes."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Marjorie Kent, 12 anos – 1917
+            </h3>
+            <p class="text-gray-700 italic mb-1">Sumiu durante a missa de Páscoa.</p>
+            <p class="text-gray-600">
+              Cadeira na igreja continuou vazia todos os domingos seguintes.
+            </p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Percy Marsh"
+          data-age="12"
+          data-year="1919"
+          data-summary="Desapareceu em pleno almoço."
+          data-details="Garfo ainda estava em sua mão, mas ele não estava mais lá."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Percy Marsh, 12 anos – 1919
+            </h3>
+            <p class="text-gray-700 italic mb-1">Desapareceu em pleno almoço.</p>
+            <p class="text-gray-600">
+              Garfo ainda estava em sua mão, mas ele não estava mais lá.
+            </p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Samuel Brice"
+          data-age="9"
+          data-year="1936"
+          data-summary="Última vez visto correndo para o bosque atrás de um vulto escuro."
+          data-details=""
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Samuel Brice, 9 anos – 1936
+            </h3>
+            <p class="text-gray-700 italic mb-1">
+              Última vez visto correndo para o bosque atrás de um vulto escuro.
+            </p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Helen Dorsey"
+          data-age="9"
+          data-year="1937"
+          data-summary="Corria atrás de uma pipa."
+          data-details="Vento parou abruptamente. Ela nunca mais foi vista."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Helen Dorsey, 9 anos – 1937
+            </h3>
+            <p class="text-gray-700 italic mb-1">Corria atrás de uma pipa.</p>
+            <p class="text-gray-600">Vento parou abruptamente. Ela nunca mais foi vista.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Clive Harrow"
+          data-age="15"
+          data-year="1938"
+          data-summary="Entrou no teatro antigo com amigos."
+          data-details="Nunca saiu. Ninguém notou sua ausência até o fim do filme."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Clive Harrow, 15 anos – 1938
+            </h3>
+            <p class="text-gray-700 italic mb-1">Entrou no teatro antigo com amigos.</p>
+            <p class="text-gray-600">
+              Nunca saiu. Ninguém notou sua ausência até o fim do filme.
+            </p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Bobby Elm"
+          data-age="10"
+          data-year="1941"
+          data-summary="Foi pescar no lago."
+          data-details="O barco estava à deriva. Nenhum sinal de Bobby."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">Bobby Elm, 10 anos – 1941</h3>
+            <p class="text-gray-700 italic mb-1">Foi pescar no lago.</p>
+            <p class="text-gray-600">O barco estava à deriva. Nenhum sinal de Bobby.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Dennis Floyd"
+          data-age="10"
+          data-year="1943"
+          data-summary="Desapareceu após cair de bicicleta."
+          data-details="Bicicleta estava de pé, apoiada no meio da rua."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Dennis Floyd, 10 anos – 1943
+            </h3>
+            <p class="text-gray-700 italic mb-1">Desapareceu após cair de bicicleta.</p>
+            <p class="text-gray-600">Bicicleta estava de pé, apoiada no meio da rua.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Daisy Law"
+          data-age="6"
+          data-year="1944"
+          data-summary="Brincava com bonecas no quintal."
+          data-details="A boneca foi encontrada pendurada na árvore."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">Daisy Law, 6 anos – 1944</h3>
+            <p class="text-gray-700 italic mb-1">Brincava com bonecas no quintal.</p>
+            <p class="text-gray-600">A boneca foi encontrada pendurada na árvore.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Tommy Greer"
+          data-age="10"
+          data-year="1947"
+          data-summary="Falava de um amigo que ‘vive embaixo da casa’."
+          data-details="Ninguém acreditou. Depois sumiu."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">Tommy Greer, 10 anos – 1947</h3>
+            <p class="text-gray-700 italic mb-1">Falava de um amigo que ‘vive embaixo da casa’.</p>
+            <p class="text-gray-600">Ninguém acreditou. Depois sumiu.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Annabelle Rhodes"
+          data-age="9"
+          data-year="1950"
+          data-summary="Desapareceu na loja de departamentos."
+          data-details="Última imagem: parada, olhando fixamente para o espelho."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Annabelle Rhodes, 9 anos – 1950
+            </h3>
+            <p class="text-gray-700 italic mb-1">Desapareceu na loja de departamentos.</p>
+            <p class="text-gray-600">
+              Última imagem: parada, olhando fixamente para o espelho.
+            </p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Joseph Blight"
+          data-age="13"
+          data-year="1951"
+          data-summary="Entrou em um túnel abandonado."
+          data-details="Nunca saiu. Corpo nunca encontrado."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">Joseph Blight, 13 anos – 1951</h3>
+            <p class="text-gray-700 italic mb-1">Entrou em um túnel abandonado.</p>
+            <p class="text-gray-600">Nunca saiu. Corpo nunca encontrado.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Iris Talbot"
+          data-age="12"
+          data-year="1952"
+          data-summary="Última vista lendo um livro na biblioteca antiga."
+          data-details="Livro ficou aberto na página 37."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">Iris Talbot, 12 anos – 1952</h3>
+            <p class="text-gray-700 italic mb-1">Última vista lendo um livro na biblioteca antiga.</p>
+            <p class="text-gray-600">Livro ficou aberto na página 37.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Cynthia Meriwether"
+          data-age="8"
+          data-year="1953"
+          data-summary="Foi vista pela última vez brincando no quintal."
+          data-details="Os pais não registraram o desaparecimento até uma semana depois."
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Cynthia Meriwether, 8 anos – 1953
+            </h3>
+            <p class="text-gray-700 italic mb-1">Foi vista pela última vez brincando no quintal.</p>
+            <p class="text-gray-600">
+              Os pais não registraram o desaparecimento até uma semana depois.
+            </p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Travis O’Donnell"
+          data-age="12"
+          data-year="1961"
+          data-summary="Última vez visto saindo da escola."
+          data-details=""
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">Travis O’Donnell, 12 anos – 1961</h3>
+            <p class="text-gray-700 italic mb-1">Última vez visto saindo da escola.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Nellie Hargrove"
+          data-age="9"
+          data-year="1987"
+          data-summary="Última vez vista sentada em sua cama, rindo para o canto escuro do quarto. A mãe ouviu a risada durante a madrugada e encontrou a janela aberta. Havia marcas estranhas no chão, desenhos com figuras distorcidas e uma presença que ninguém conseguiu explicar. A menina deixou para trás apenas um giz de cera vermelho — arrastado alguns centímetros, como se tivesse sido puxado por dedos invisíveis. A casa nunca mais foi a mesma."
+          data-details=""
+          data-category="desaparecidos"
+        >
+          <i
+            class="fas fa-child fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">Nellie Hargrove, 9 anos – 1987</h3>
+            <p class="text-gray-700 italic mb-1">Última vez vista sentada em sua cama, rindo para o canto escuro do quarto. A mãe ouviu a risada durante a madrugada e encontrou a janela aberta. Havia marcas estranhas no chão, desenhos com figuras distorcidas e uma presença que ninguém conseguiu explicar. A menina deixou para trás apenas um giz de cera vermelho — arrastado alguns centímetros, como se tivesse sido puxado por dedos invisíveis. A casa nunca mais foi a mesma.
+
+            </p>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <section class="mb-16" id="catedral">
+      <h2
+        class="text-4xl font-bold mb-6 border-b-4 border-yellow-400 inline-block pb-2"
+      >
+        Desaparecimentos relacionados à Catedral de St. Mary
+      </h2>
+      <ul class="space-y-8">
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Matthew Grayson"
+          data-age="11"
+          data-year="1920"
+          data-summary="Desapareceu em 1920."
+          data-details="Última vez visto perto da Catedral de St. Mary."
+          data-category="catedral"
+        >
+          <i
+            class="fas fa-church fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Matthew Grayson, 11 anos – 1920
+            </h3>
+            <p class="text-gray-700 italic mb-1">Desapareceu em 1920.</p>
+            <p class="text-gray-600">Última vez visto perto da Catedral de St. Mary.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Clara Jensen"
+          data-age="13"
+          data-year="1920"
+          data-summary="Desapareceu na Catedral de St. Mary."
+          data-details=""
+          data-category="catedral"
+        >
+          <i
+            class="fas fa-church fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Clara Jensen, 13 anos – 1920
+            </h3>
+            <p class="text-gray-700 italic mb-1">Desapareceu na Catedral de St. Mary.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Samuel Finch"
+          data-age="10"
+          data-year="1921"
+          data-summary="Última vez visto próximo à catedral."
+          data-details=""
+          data-category="catedral"
+        >
+          <i
+            class="fas fa-church fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Samuel Finch, 10 anos – 1921
+            </h3>
+            <p class="text-gray-700 italic mb-1">Última vez visto próximo à catedral.</p>
+          </div>
+        </li>
+        <li
+          tabindex="0"
+          role="button"
+          class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 cursor-pointer fade-slide-up focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400"
+          data-name="Erik Lawson"
+          data-age="14"
+          data-year="1922"
+          data-summary="Última vez visto perto da Catedral de St. Mary."
+          data-details=""
+          data-category="catedral"
+        >
+          <i
+            class="fas fa-church fa-3x text-blue-700 flex-shrink-0 mt-1"
+            aria-hidden="true"
+          ></i>
+          <div>
+            <h3 class="text-2xl font-semibold text-blue-900">
+              Erik Lawson, 14 anos – 1922
+            </h3>
+            <p class="text-gray-700 italic mb-1">
+              Última vez visto perto da Catedral de St. Mary.
+            </p>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <section class="mb-16" id="mandado">
+      <h2
+        class="text-4xl font-bold mb-6 border-b-4 border-yellow-400 inline-block pb-2"
+      >
+        Mandado de Busca - 1920
+      </h2>
+      <div
+        class="bg-white rounded-lg shadow-md p-8 max-w-3xl mx-auto text-center"
+        tabindex="0"
+      >
+        <i class="fas fa-search fa-6x text-blue-700 mb-6 mx-auto"></i>
+        <p class="text-gray-800 text-lg mb-4">
+          "Oito oficiais enviados para inspeção na Catedral de St. Mary na noite
+          de 3 de outubro de 1920."
+        </p>
+        <p class="text-gray-800 text-lg mb-4">
+          "Os oficiais desapareceram sem deixar rastros. Nenhum corpo encontrado.
+          Nenhuma evidência recuperada. Caso arquivado em 1921."
+        </p>
+      </div>
+    </section>
+    <section class="mb-16" id="documento">
+      <h2
+        class="text-4xl font-bold mb-6 border-b-4 border-yellow-400 inline-block pb-2"
+      >
+        Documento de 1925
+      </h2>
+      <div
+        class="bg-white rounded-lg shadow-md p-8 max-w-3xl mx-auto text-center"
+        tabindex="0"
+      >
+        <i class="fas fa-file-alt fa-6x text-blue-700 mb-6 mx-auto"></i>
+        <p class="text-gray-800 text-lg italic">"Nenhum oficial recorda o ocorrido."</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div
+    id="modal-bg"
+    class="fixed inset-0 hidden items-center justify-center z-60"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div
+      id="modal-content"
+      class="bg-white rounded-lg shadow-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto p-8 relative"
+      tabindex="0"
+    >
+      <button
+        id="modal-close"
+        aria-label="Fechar detalhes"
+        class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded"
+      >
+        <i class="fas fa-times fa-lg"></i>
+      </button>
+      <h3 id="modal-title" class="text-3xl font-bold text-blue-900 mb-4"></h3>
+      <p id="modal-summary" class="text-lg italic text-gray-700 mb-4"></p>
+      <p id="modal-details" class="text-gray-800 text-base whitespace-pre-line"></p>
+    </div>
+  </div>
+
+  <footer class="bg-blue-900 text-white py-6 mt-auto">
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center"
+    >
+      <p class="text-sm">© 1989 Carsby Notícias. Todos os direitos reservados.</p>
+      <div class="flex space-x-6 mt-3 md:mt-0">
+        <a
+          aria-label="Facebook"
+          class="hover:text-yellow-400 transition-colors"
+          href="https://facebook.com"
+          rel="noopener"
+          target="_blank"
+          ><i class="fab fa-facebook fa-lg"></i
+        ></a>
+        <a
+          aria-label="Twitter"
+          class="hover:text-yellow-400 transition-colors"
+          href="https://twitter.com"
+          rel="noopener"
+          target="_blank"
+          ><i class="fab fa-twitter fa-lg"></i
+        ></a>
+        <a
+          aria-label="Instagram"
+          class="hover:text-yellow-400 transition-colors"
+          href="https://instagram.com"
+          rel="noopener"
+          target="_blank"
+          ><i class="fab fa-instagram fa-lg"></i
+        ></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Hamburger menu toggle with animation
+    const menuBtn = document.getElementById("menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const hamburgerIcon = document.getElementById("hamburger-icon");
+
+    menuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+      hamburgerIcon.classList.toggle("open");
+      const expanded =
+        menuBtn.getAttribute("aria-expanded") === "true" ? "false" : "true";
+      menuBtn.setAttribute("aria-expanded", expanded);
+    });
+
+    // Scroll animation for fade-slide-up elements
+    const fadeElements = document.querySelectorAll(".fade-slide-up");
+
+    const observerOptions = {
+      threshold: 0.1,
+    };
+
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    fadeElements.forEach((el) => {
+      fadeObserver.observe(el);
+    });
+
+    // Modal functionality
+    const modalBg = document.getElementById("modal-bg");
+    const modalTitle = document.getElementById("modal-title");
+    const modalSummary = document.getElementById("modal-summary");
+    const modalDetails = document.getElementById("modal-details");
+    const modalClose = document.getElementById("modal-close");
+
+    function openModal(data) {
+      modalTitle.textContent = `${data.name}, ${data.age} anos – ${data.year}`;
+      modalSummary.textContent = data.summary;
+      modalDetails.textContent = data.details || "";
+      modalBg.classList.remove("hidden");
+      modalBg.classList.add("flex");
+      modalBg.setAttribute("aria-hidden", "false");
+      modalClose.focus();
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      modalBg.classList.add("hidden");
+      modalBg.classList.remove("flex");
+      modalBg.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    // Open modal on click or keyboard enter/space
+    document.querySelectorAll("[role=button]").forEach((item) => {
+      item.addEventListener("click", () => {
+        const data = {
+          name: item.getAttribute("data-name"),
+          age: item.getAttribute("data-age"),
+          year: item.getAttribute("data-year"),
+          summary: item.getAttribute("data-summary"),
+          details: item.getAttribute("data-details"),
+          category: item.getAttribute("data-category"),
+        };
+        openModal(data);
+      });
+      item.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          const data = {
+            name: item.getAttribute("data-name"),
+            age: item.getAttribute("data-age"),
+            year: item.getAttribute("data-year"),
+            summary: item.getAttribute("data-summary"),
+            details: item.getAttribute("data-details"),
+            category: item.getAttribute("data-category"),
+          };
+          openModal(data);
+        }
+      });
+    });
+
+    // Close modal on close button click or background click or ESC key
+    modalClose.addEventListener("click", closeModal);
+    modalBg.addEventListener("click", (e) => {
+      if (e.target === modalBg) {
+        closeModal();
+      }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modalBg.classList.contains("flex")) {
+        closeModal();
+      }
+    });
+  </script>
+ </body>
+</html>
