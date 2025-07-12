@@ -1,625 +1,1155 @@
-
 <html class="scroll-smooth" lang="pt-BR">
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
   <title>
-   Sombras de Carsby
+   Dashboard Sidney Santos - Coach &amp; Personal Trainer
   </title>
   <script src="https://cdn.tailwindcss.com">
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&amp;display=swap" rel="stylesheet"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
   <style>
    body {
-      font-family: 'Playfair Display', serif;
-      background-color: #000000;
-      color: #f0f0f0;
-      overflow-x: hidden;
+      font-family: 'Montserrat', sans-serif;
     }
-    /* Glitch effect */
-    .glitch {
-      position: relative;
-      color: #f0f0f0;
-      font-weight: 700;
-      font-size: 1.5rem;
-      letter-spacing: 0.05em;
-    }
-    .glitch::before,
-    .glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 0;
-      width: 100%;
-      overflow: hidden;
-      clip: rect(0, 900px, 0, 0);
-    }
-    .glitch::before {
-      animation: glitchTop 2s infinite linear alternate-reverse;
-      color: #ff00c8;
-      z-index: -1;
-    }
-    .glitch::after {
-      animation: glitchBottom 2s infinite linear alternate-reverse;
-      color: #00fff9;
-      z-index: -2;
-    }
-    @keyframes glitchTop {
-      0% {
-        clip: rect(0, 900px, 0, 0);
-        transform: translate(0);
-      }
-      10% {
-        clip: rect(0, 900px, 10px, 0);
-        transform: translate(-2px, -2px);
-      }
-      20% {
-        clip: rect(0, 900px, 0, 0);
-        transform: translate(0);
-      }
-      30% {
-        clip: rect(0, 900px, 8px, 0);
-        transform: translate(-2px, 0);
-      }
-      40% {
-        clip: rect(0, 900px, 0, 0);
-        transform: translate(0);
-      }
-      100% {
-        clip: rect(0, 900px, 0, 0);
-        transform: translate(0);
-      }
-    }
-    @keyframes glitchBottom {
-      0% {
-        clip: rect(0, 900px, 0, 0);
-        transform: translate(0);
-      }
-      10% {
-        clip: rect(5px, 900px, 15px, 0);
-        transform: translate(2px, 2px);
-      }
-      20% {
-        clip: rect(0, 900px, 0, 0);
-        transform: translate(0);
-      }
-      30% {
-        clip: rect(7px, 900px, 15px, 0);
-        transform: translate(2px, 0);
-      }
-      40% {
-        clip: rect(0, 900px, 0, 0);
-        transform: translate(0);
-      }
-      100% {
-        clip: rect(0, 900px, 0, 0);
-        transform: translate(0);
-      }
-    }
-    /* Lantern */
-    #lantern {
-      position: fixed;
-      pointer-events: none;
-      mix-blend-mode: screen;
-      filter: drop-shadow(0 0 8px #fff);
-      transition: transform 0.1s ease-out;
-      z-index: 9999;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(0,0,0,0) 70%);
-      box-shadow: 0 0 40px 20px rgba(255,255,255,0.15);
-      pointer-events: none;
-    }
-    /* Rain animation */
-    .rain {
-      pointer-events: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 999;
-      overflow: hidden;
-    }
-    .raindrop {
-      position: absolute;
-      bottom: 100%;
-      width: 2px;
-      height: 15px;
-      background: rgba(255, 255, 255, 0.15);
-      animation-name: fall;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-      border-radius: 50%;
-      filter: drop-shadow(0 0 2px #a0c8ff);
-    }
-    @keyframes fall {
-      to {
-        transform: translateY(110vh);
-      }
-    }
-    /* Spark effect */
-    .spark {
-      position: fixed;
-      width: 4px;
-      height: 4px;
-      background: #ff00c8;
-      border-radius: 50%;
-      filter: drop-shadow(0 0 6px #ff00c8);
-      opacity: 0;
-      animation: sparkAnim 2s infinite;
-      pointer-events: none;
-      z-index: 9999;
-    }
-    @keyframes sparkAnim {
-      0% {
-        opacity: 0;
-        transform: translate(0, 0) scale(0.5);
-      }
-      50% {
-        opacity: 1;
-        transform: translate(5px, -5px) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(10px, 0) scale(0.5);
-      }
-    }
-    /* Corrupted link glitch */
-    .corrupted-link {
-      color: #ff00c8;
-      font-weight: 700;
-      text-decoration: none;
-      position: relative;
-      display: inline-block;
-      letter-spacing: 0.1em;
-      font-size: 1.125rem;
-    }
-    .corrupted-link::before,
-    .corrupted-link::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 0;
-      width: 100%;
-      overflow: hidden;
-      clip: rect(0, 900px, 0, 0);
-      opacity: 0.7;
-    }
-    .corrupted-link::before {
-      animation: glitchTop 1.5s infinite linear alternate-reverse;
-      color: #00fff9;
-      z-index: -1;
-    }
-    .corrupted-link::after {
-      animation: glitchBottom 1.5s infinite linear alternate-reverse;
-      color: #ff00c8;
-      z-index: -2;
-    }
-    .corrupted-link:hover {
-      text-decoration: underline;
-      color: #fff;
-    }
-    /* Scrollbar */
+    /* Scrollbar for sidebar */
     ::-webkit-scrollbar {
       width: 8px;
+      height: 8px;
     }
     ::-webkit-scrollbar-track {
-      background: #111;
+      background: #1f2937;
     }
     ::-webkit-scrollbar-thumb {
-      background: #444;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #666;
-    }
-    /* Modal styles */
-    .modal-bg {
-      background-color: rgba(0,0,0,0.85);
-      backdrop-filter: blur(6px);
+      background-color: #b91c1c;
+      border-radius: 10px;
+      border: 2px solid #1f2937;
     }
   </style>
  </head>
- <body class="relative min-h-screen flex flex-col">
-  <!-- Rain container -->
-  <div aria-hidden="true" class="rain" id="rain">
-  </div>
-  <!-- Lantern effect -->
-  <div aria-hidden="true" id="lantern">
-  </div>
-  <!-- Header -->
-  <header class="sticky top-0 z-50 bg-black bg-opacity-90 backdrop-blur-sm border-b border-gray-800">
-   <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between py-4">
-    <a class="text-white text-3xl font-bold tracking-wide select-none" href="#home">
-     Sombras de Carsby
-    </a>
-    <ul class="flex flex-wrap gap-6 text-white text-lg font-semibold">
-     <li>
-      <a class="hover:text-pink-500 transition" href="#arquivo">
-       📰 Arquivos
-      </a>
-     </li>
-     <li>
-      <a class="hover:text-pink-500 transition" href="#mapa">
-       📍 Mapa de Carsby
-      </a>
-     </li>
-     <li>
-      <a class="hover:text-pink-500 transition" href="#dossie">
-       📁 Dossiê ANNWN
-      </a>
-     </li>
-     <li>
-      <a class="hover:text-pink-500 transition" href="#conexao">
-       🔗 Conexão com o Inferno
-      </a>
-     </li>
-    </ul>
-   </nav>
-  </header>
-  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-20">
-   <!-- Home / Intro -->
-   <section class="text-center max-w-3xl mx-auto" id="home">
-    <h1 class="text-5xl font-extrabold glitch" data-text="Sombras de Carsby">
-     Sombras de Carsby
-    </h1>
-    <p class="mt-6 text-lg leading-relaxed max-w-xl mx-auto text-gray-300">
-     Portal de entrada para o universo narrativo de mistério e sombras. Explore os arquivos, mapas e segredos da cidade de Carsby, onde o passado e o presente se entrelaçam em uma atmosfera retrô-dark.
-    </p>
-   </section>
-   <!-- Arquivo das Sombras -->
-   <section class="space-y-8" id="arquivo">
-    <h2 class="text-4xl font-bold border-b border-pink-600 pb-2 max-w-max mx-auto glitch" data-text="📰 Arquivo das Sombras">
-     📰 Arquivos
-    </h2>
-    <div class="space-y-10 max-w-4xl mx-auto text-gray-300">
-     <article class="border border-gray-700 rounded-lg p-6 bg-black bg-opacity-60 shadow-md" tabindex="0">
-      <h3 class="text-2xl font-semibold mb-3 glitch" data-text="🕯️ Julho de 1951 — Garoto some durante encenação de peça escolar; palco foi encontrado encharcado">
-       🕯️ Julho de 1951 — “Garoto some durante encenação de peça escolar; palco foi encontrado encharcado”
-      </h3>
-      <p class="mb-3">
-       Na última sexta-feira, durante os ensaios finais de “A Tempestade” na escola Eastbridge Middle School, o pequeno Benjamin Griggs, de 9 anos, desapareceu após ser chamado para seu monólogo.<br/>
-       O palco ficou vazio. As cortinas começaram a se mover por conta própria.<br/>
-       E havia água — muita água — escorrendo pelas tábuas secas.<br/>
-       A diretora jurou ter ouvido uma voz grave dizendo: “As palavras afogam, se você não aprender a engolir.”
-      </p>
-      <button aria-label="Ler mais sobre Garoto some durante encenação de peça escolar" class="read-more-btn mt-3 inline-block text-pink-600 font-semibold hover:underline cursor-pointer" data-article="benjamin">
-       Ler mais →
-      </button>
-     </article>
-     <article class="border border-gray-700 rounded-lg p-6 bg-black bg-opacity-60 shadow-md" tabindex="0">
-      <h3 class="text-2xl font-semibold mb-3 glitch" data-text="🌘 Outubro de 1963 — Família desaparece no jantar; mesa posta e lareira acesa">
-       🌘 Outubro de 1963 — “Família desaparece no jantar; mesa posta e lareira acesa”
-      </h3>
-      <p class="mb-3">
-       A família Crawford, conhecida na vizinhança por sua pontualidade quase obsessiva, não foi vista desde a noite do dia 14.<br/>
-       Vizinhos relatam ter ouvido o som de talheres batendo no prato até por volta das 20h.<br/>
-       A polícia encontrou a casa trancada por dentro.<br/>
-       A sopa ainda estava quente.<br/>
-       E cada prato tinha uma colher flutuando em círculo.
-      </p>
-      <button aria-label="Ler mais sobre Família desaparece no jantar" class="read-more-btn mt-3 inline-block text-pink-600 font-semibold hover:underline cursor-pointer" data-article="crawford">
-       Ler mais →
-      </button>
-     </article>
-     <article class="border border-gray-700 rounded-lg p-6 bg-black bg-opacity-60 shadow-md" tabindex="0">
-      <h3 class="text-2xl font-semibold mb-3 glitch" data-text="🎠 Maio de 1924 — Menina desaparece em carrossel desligado há décadas">
-       🎠 Maio de 1924 — “Menina desaparece em carrossel desligado há décadas”
-      </h3>
-      <p class="mb-3">
-       Durante um passeio de classe no antigo parque Black Pines, fechado desde 1911, Ruthie Cormack, 8 anos, foi vista por última vez sorrindo para algo atrás do espelho do carrossel.<br/>
-       O brinquedo, enferrujado e quebrado, girou por exatamente uma volta.<br/>
-       Depois parou.<br/>
-       A menina sumiu.<br/>
-       Havia uma risada gravada no vinil velho deixado no chão.
-      </p>
-      <button aria-label="Ler mais sobre Menina desaparece em carrossel" class="read-more-btn mt-3 inline-block text-pink-600 font-semibold hover:underline cursor-pointer" data-article="ruthie">
-       Ler mais →
-      </button>
-     </article>
-     <article class="border border-gray-700 rounded-lg p-6 bg-black bg-opacity-60 shadow-md" tabindex="0">
-      <h3 class="text-2xl font-semibold mb-3 glitch" data-text="📻 Dezembro de 1939 — Coral infantil desaparece; padres ouvem canto vindo do solo da catedral">
-       📻 Dezembro de 1939 — “Coral infantil desaparece; padres ouvem canto vindo do solo da catedral”
-      </h3>
-      <p class="mb-3">
-       Na noite de Natal, 12 crianças do coral da Catedral de St. Mary nunca saíram da sacristia.<br/>
-       Na manhã seguinte, os vitrais estavam escurecidos.<br/>
-       E do chão da cripta, ouviu-se um canto — doce, afinado — mas em uma língua que ninguém conseguia identificar.<br/>
-       Um padre arrancou os próprios tímpanos tentando silenciá-lo.
-      </p>
-      <button aria-label="Ler mais sobre Coral infantil desaparece" class="read-more-btn mt-3 inline-block text-pink-600 font-semibold hover:underline cursor-pointer" data-article="coral">
-       Ler mais →
-      </button>
-     </article>
-     <article class="border border-gray-700 rounded-lg p-6 bg-black bg-opacity-60 shadow-md" tabindex="0">
-      <h3 class="text-2xl font-semibold mb-3 glitch" data-text="🪞 Agosto de 1972 — Garoto some após dizer que ‘vê o avesso das pessoas’">
-       🪞 Agosto de 1972 — “Garoto some após dizer que ‘vê o avesso das pessoas’”
-      </h3>
-      <p class="mb-3">
-       Michael Withers, 11 anos, vinha apresentando comportamento estranho, segundo a escola.<br/>
-       Passava horas encarando o espelho do banheiro e dizendo frases como: “Tem mais gente aqui do que lá fora.”<br/>
-       Desapareceu durante uma evacuação simulada.<br/>
-       O espelho do banheiro foi encontrado rachado… por dentro.
-      </p>
-      <button aria-label="Ler mais sobre Garoto some após dizer que vê o avesso das pessoas" class="read-more-btn mt-3 inline-block text-pink-600 font-semibold hover:underline cursor-pointer" data-article="michael">
-       Ler mais →
-      </button>
-     </article>
-     <article class="border border-gray-700 rounded-lg p-6 bg-black bg-opacity-60 shadow-md" tabindex="0">
-      <h3 class="text-2xl font-semibold mb-3 glitch" data-text="🌑 Fevereiro de 1919 — Trilhos do trem engolem menino; trilho continua reto, intacto">
-       🌑 Fevereiro de 1919 — “Trilhos do trem engolem menino; trilho continua reto, intacto”
-      </h3>
-      <p class="mb-3">
-       O pequeno Henry Lowell desapareceu ao brincar nos trilhos próximos ao cemitério velho.<br/>
-       Testemunhas dizem que o viram correr, tropeçar e cair…<br/>
-       Mas não havia buraco.<br/>
-       Os trilhos estavam lisos.<br/>
-       E na pedra mais próxima, alguém havia escrito com prego: “O trem chegou, mesmo sem apitar.”
-      </p>
-      <button aria-label="Ler mais sobre Trilhos do trem engolem menino" class="read-more-btn mt-3 inline-block text-pink-600 font-semibold hover:underline cursor-pointer" data-article="henry">
-       Ler mais →
-      </button>
-     </article>
-
-    </div>
-   </section>
-   <!-- Mapa de Carsby -->
-   <section class="space-y-8" id="mapa">
-    <h2 class="text-4xl font-bold border-b border-pink-600 pb-2 max-w-max mx-auto glitch" data-text="📍 Mapa de Carsby">
-     📍 Mapa de Carsby
-    </h2>
-    <div class="relative max-w-4xl mx-auto rounded-lg overflow-hidden border border-gray-700 shadow-lg bg-black bg-opacity-70">
-     <img alt="Mapa antigo e embaçado da cidade de Carsby, com pontos destacados para Floresta, Ferro-velho, Catedral de St. Mary, Escola Holloway e outros locais, em estilo retrô e tons escuros" class="w-full h-auto" height="600" loading="lazy" src="https://storage.googleapis.com/a1aa/image/dde7701b-ebc2-4a84-881b-13b1f4de0577.jpg" usemap="#carsby-map" width="800"/>
-     <map name="carsby-map">
-     </map>
-    </div>
-   </section>
-   <!-- Dossiê ANNWN -->
-   <section class="space-y-8 max-w-3xl mx-auto" id="dossie">
-    <h2 class="text-4xl font-bold border-b border-pink-600 pb-2 max-w-max mx-auto glitch" data-text="📁 Dossiê ANNWN">
-     📁 Dossiê ANNWN
-    </h2>
-    <form aria-label="Área secreta Dossiê ANNWN" class="flex flex-col space-y-4 bg-black bg-opacity-70 border border-gray-700 rounded-lg p-6 shadow-lg" id="password-form">
-     <label class="text-lg font-semibold text-gray-300" for="password">
-      Digite a senha para acessar o Dossiê ANNWN:
-     </label>
-     <input aria-describedby="password-error" aria-required="true" autocomplete="off" class="rounded-md border border-gray-600 bg-black text-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-600" id="password" name="password" type="password"/>
-     <button aria-label="Enviar senha" class="bg-pink-600 hover:bg-pink-700 text-white font-semibold rounded-md px-4 py-2 transition" type="submit">
-      Entrar
-     </button>
-     <p aria-live="assertive" class="text-red-500 text-sm hidden" id="password-error" role="alert">
-     </p>
-    </form>
-    <div aria-live="polite" class="hidden mt-6 bg-black bg-opacity-60 border border-pink-600 rounded-lg p-6 shadow-lg text-gray-300" id="dossie-content" tabindex="0">
-     <h3 class="text-2xl font-semibold mb-4 glitch" data-text="Projeto ANNWN">
-      Projeto ANNWN
-     </h3>
-     <p class="mb-4">
-      O Dossiê ANNWN revela detalhes obscuros sobre um projeto governamental secreto que pode estar ligado aos desaparecimentos em Carsby. Documentos vazados indicam experimentos com dimensões paralelas e interferências na realidade.
-     </p>
-     <img alt="Documento secreto com carimbos oficiais, anotações manuscritas em tinta rosa e gráficos técnicos, estilo retrô-dark" class="w-full rounded-md mb-4" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/58439b58-3720-4a55-e573-5f8a1e149a8a.jpg" width="600"/>
-     <p>
-      Acredita-se que o projeto tenha causado as interferências dimensionais que geram o efeito glitch e as sombras que assombram a cidade.
-     </p>
-    </div>
-   </section>
-   <!-- Conexão com o Inferno -->
-   <section class="space-y-8 max-w-3xl mx-auto text-center" id="conexao">
-    <h2 class="text-4xl font-bold border-b border-pink-600 pb-2 max-w-max mx-auto glitch" data-text="🔗 Conexão com o Inferno">
-     🔗 Conexão com o Inferno
-    </h2>
-    <p class="mt-4 text-gray-400 max-w-prose mx-auto">
-     Site encontrado nos arquivos antigos.
-     <a class="corrupted-link" data-text="Acessar Carsby Notícias" href="noticias.html" rel="noopener noreferrer" target="_blank">
-      Acessar Carsby Notícias
+ <body class="bg-gray-900 text-gray-200 min-h-screen flex flex-col">
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 right-0 bg-gray-800 bg-opacity-95 backdrop-blur-sm z-50 shadow-md">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 items-center">
+     <!-- Logo -->
+     <a class="flex items-center space-x-2" href="#">
+      <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-red-800 to-orange-600 flex items-center justify-center shadow-lg">
+       <svg class="w-7 h-7 text-gray-100" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round">
+        </path>
+       </svg>
+       <span class="sr-only">
+        Logotipo Sidney Santos
+       </span>
+      </div>
+      <span class="text-xl font-bold text-gray-100 select-none tracking-wide">
+       Sidney Santos
+      </span>
      </a>
-    </p>
-   </section>
-  </main>
-  <footer class="bg-black bg-opacity-90 border-t border-gray-800 text-gray-500 text-center py-6 select-none">
-   <p>
-    © 1990 Sombras de Carsby. Todos os direitos reservados.
-   </p>
-  </footer>
-
-  <!-- Modal -->
-  <div aria-hidden="true" aria-modal="true" class="fixed inset-0 flex items-center justify-center p-4 modal-bg opacity-0 pointer-events-none transition-opacity duration-300" id="modal">
-   <div class="bg-black bg-opacity-90 rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 relative shadow-lg border border-pink-600">
-    <button aria-label="Fechar modal" class="absolute top-4 right-4 text-pink-600 hover:text-pink-400 text-2xl font-bold focus:outline-none" id="modal-close">
-     &times;
-    </button>
-    <div id="modal-content" class="text-gray-300 text-lg leading-relaxed">
+     <!-- Menu desktop -->
+     <div class="hidden md:flex items-center space-x-6 text-gray-300 font-semibold text-sm select-none">
+      <a class="hover:text-red-600 transition-colors duration-200" href="#minha-rotina">
+       Minha Rotina
+      </a>
+      <a class="hover:text-red-600 transition-colors duration-200" href="#dieta">
+       Dieta
+      </a>
+      <a class="hover:text-red-600 transition-colors duration-200" href="#avaliacoes">
+       Avaliações
+      </a>
+      <a class="hover:text-red-600 transition-colors duration-200" href="#treinos">
+       Treinos
+      </a>
+      <a class="hover:text-red-600 transition-colors duration-200" href="#progresso">
+       Progresso
+      </a>
+      <a class="hover:text-red-600 transition-colors duration-200" href="#consultas">
+       Consultas
+      </a>
+      <a class="hover:text-red-600 transition-colors duration-200" href="#mensagens">
+       Mensagens
+      </a>
+     </div>
+     <!-- User avatar and dropdown -->
+     <div class="relative ml-4">
+      <button aria-expanded="false" aria-haspopup="true" class="flex items-center focus:outline-none focus:ring-2 focus:ring-red-600 rounded-full" id="user-menu-button">
+       <img alt="Avatar circular do usuário com fundo cinza escuro e detalhes em vermelho queimado" class="h-10 w-10 rounded-full object-cover border-2 border-red-600" height="80" src="https://storage.googleapis.com/a1aa/image/117a9c3c-3eb5-4b58-98b5-6845aec7a3f9.jpg" width="80"/>
+      </button>
+      <div aria-labelledby="user-menu-button" aria-orientation="vertical" class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-50" id="user-dropdown" role="menu" tabindex="-1">
+       <div class="py-1" role="none">
+        <a class="block px-4 py-2 text-sm text-gray-300 hover:bg-red-700 hover:text-white" href="#configuracoes" id="user-menu-item-0" role="menuitem" tabindex="-1">
+         Configurações de Conta
+        </a>
+        <a class="block px-4 py-2 text-sm text-gray-300 hover:bg-red-700 hover:text-white" href="#notificacoes" id="user-menu-item-1" role="menuitem" tabindex="-1">
+         Preferências de Notificação
+        </a>
+        <a class="block px-4 py-2 text-sm text-gray-300 hover:bg-red-700 hover:text-white" href="#suporte" id="user-menu-item-2" role="menuitem" tabindex="-1">
+         Suporte Técnico
+        </a>
+        <button class="w-full text-left block px-4 py-2 text-sm text-red-600 hover:bg-red-700 hover:text-white font-semibold" id="user-menu-item-3" role="menuitem" tabindex="-1" type="button">
+         <i class="fas fa-sign-out-alt mr-2">
+         </i>
+         Logout
+        </button>
+       </div>
+      </div>
+     </div>
+     <!-- Mobile menu button -->
+     <div class="md:hidden ml-4">
+      <button aria-expanded="false" aria-label="Abrir menu" class="text-gray-300 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 rounded-md" id="mobile-menu-button">
+       <i class="fas fa-bars fa-lg">
+       </i>
+      </button>
+     </div>
     </div>
    </div>
+   <!-- Mobile menu -->
+   <div class="hidden md:hidden bg-gray-800 border-t border-gray-700" id="mobile-menu">
+    <a class="block px-4 py-3 text-gray-300 hover:bg-red-700 hover:text-white font-semibold border-b border-gray-700" href="#minha-rotina">
+     Minha Rotina
+    </a>
+    <a class="block px-4 py-3 text-gray-300 hover:bg-red-700 hover:text-white font-semibold border-b border-gray-700" href="#dieta">
+     Dieta
+    </a>
+    <a class="block px-4 py-3 text-gray-300 hover:bg-red-700 hover:text-white font-semibold border-b border-gray-700" href="#avaliacoes">
+     Avaliações
+    </a>
+    <a class="block px-4 py-3 text-gray-300 hover:bg-red-700 hover:text-white font-semibold border-b border-gray-700" href="#treinos">
+     Treinos
+    </a>
+    <a class="block px-4 py-3 text-gray-300 hover:bg-red-700 hover:text-white font-semibold border-b border-gray-700" href="#progresso">
+     Progresso
+    </a>
+    <a class="block px-4 py-3 text-gray-300 hover:bg-red-700 hover:text-white font-semibold border-b border-gray-700" href="#consultas">
+     Consultas
+    </a>
+    <a class="block px-4 py-3 text-gray-300 hover:bg-red-700 hover:text-white font-semibold" href="#mensagens">
+     Mensagens
+    </a>
+    <div class="border-t border-gray-700 mt-2">
+     <a class="block px-4 py-3 text-gray-300 hover:bg-red-700 hover:text-white font-semibold border-b border-gray-700" href="#configuracoes">
+      Configurações de Conta
+     </a>
+     <a class="block px-4 py-3 text-gray-300 hover:bg-red-700 hover:text-white font-semibold border-b border-gray-700" href="#notificacoes">
+      Preferências de Notificação
+     </a>
+     <a class="block px-4 py-3 text-gray-300 hover:bg-red-700 hover:text-white font-semibold border-b border-gray-700" href="#suporte">
+      Suporte Técnico
+     </a>
+     <button class="w-full text-left block px-4 py-3 text-red-600 hover:bg-red-700 hover:text-white font-semibold" type="button">
+      <i class="fas fa-sign-out-alt mr-2">
+      </i>
+      Logout
+     </button>
+    </div>
+   </div>
+  </nav>
+  <!-- Main content wrapper -->
+  <div class="flex flex-1 pt-16 overflow-hidden">
+   <!-- Main dashboard content -->
+   <main class="flex-1 overflow-y-auto p-6 space-y-8 max-w-full">
+    <!-- Estatísticas diárias -->
+    <section aria-label="Resumo estatístico diário" class="bg-gray-800 rounded-lg shadow-lg p-6 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-7xl mx-auto" id="estatisticas-diarias">
+     <div class="flex flex-col items-center space-y-2">
+      <div aria-hidden="true" class="w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-tr from-red-700 to-orange-500 text-white text-2xl shadow-md">
+       <i class="fas fa-fire">
+       </i>
+      </div>
+      <p class="text-sm font-semibold text-gray-300">
+       Calorias Ingeridas
+      </p>
+      <p class="text-xl font-bold text-red-600">
+       1.850 kcal
+      </p>
+     </div>
+     <div class="flex flex-col items-center space-y-2">
+      <div aria-hidden="true" class="w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-tr from-red-700 to-orange-500 text-white text-2xl shadow-md">
+       <i class="fas fa-burn">
+       </i>
+      </div>
+      <p class="text-sm font-semibold text-gray-300">
+       Calorias Gastas
+      </p>
+      <p class="text-xl font-bold text-red-600">
+       2.300 kcal
+      </p>
+     </div>
+     <div class="flex flex-col items-center space-y-2">
+      <div aria-hidden="true" class="w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-tr from-red-700 to-orange-500 text-white text-2xl shadow-md">
+       <i class="fas fa-dumbbell">
+       </i>
+      </div>
+      <p class="text-sm font-semibold text-gray-300">
+       Sessões de Treino
+      </p>
+      <p class="text-xl font-bold text-red-600">
+       3 / 3
+      </p>
+     </div>
+     <div class="flex flex-col items-center space-y-2">
+      <div aria-hidden="true" class="w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-tr from-red-700 to-orange-500 text-white text-2xl shadow-md">
+       <i class="fas fa-bed">
+       </i>
+      </div>
+      <p class="text-sm font-semibold text-gray-300">
+       Tempo de Sono
+      </p>
+      <p class="text-xl font-bold text-red-600">
+       7h 45m
+      </p>
+     </div>
+     <div class="flex flex-col items-center space-y-2 col-span-2 sm:col-span-4">
+      <div aria-hidden="true" class="w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-tr from-red-700 to-orange-500 text-white text-2xl shadow-md">
+       <i class="fas fa-tint">
+       </i>
+      </div>
+      <p class="text-sm font-semibold text-gray-300">
+       Nível de Hidratação
+      </p>
+      <p class="text-xl font-bold text-red-600">
+       2.2 L / 3 L
+      </p>
+     </div>
+    </section>
+    <!-- Plano de treino semanal -->
+    <section aria-label="Plano de treino semanal" class="max-w-7xl mx-auto bg-gray-800 rounded-lg shadow-lg p-6" id="minha-rotina">
+     <h2 class="text-2xl font-bold text-red-600 mb-4 select-none">
+      Plano de Treino Semanal
+     </h2>
+     <div class="grid grid-cols-1 sm:grid-cols-7 gap-4 text-gray-300">
+      <!-- Days of week header -->
+      <div class="hidden sm:block font-semibold text-center">
+       Seg
+      </div>
+      <div class="hidden sm:block font-semibold text-center">
+       Ter
+      </div>
+      <div class="hidden sm:block font-semibold text-center">
+       Qua
+      </div>
+      <div class="hidden sm:block font-semibold text-center">
+       Qui
+      </div>
+      <div class="hidden sm:block font-semibold text-center">
+       Sex
+      </div>
+      <div class="hidden sm:block font-semibold text-center">
+       Sáb
+      </div>
+      <div class="hidden sm:block font-semibold text-center">
+       Dom
+      </div>
+      <!-- Monday -->
+      <button aria-controls="day-mon" aria-expanded="false" class="bg-gray-700 rounded-lg p-4 flex flex-col items-center space-y-3 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600" id="day-mon-button" type="button">
+       <span class="text-lg font-semibold text-red-600">
+        Segunda
+       </span>
+       <img alt="Thumbnail do exercício 1 para segunda-feira mostrando uma pessoa fazendo agachamento com barra em academia moderna" class="rounded-md shadow-md" height="80" loading="lazy" src="https://storage.googleapis.com/a1aa/image/8c070c93-7174-4c4d-5d3c-0ab0cfcb5d97.jpg" width="120"/>
+      </button>
+      <!-- Tuesday -->
+      <button aria-controls="day-tue" aria-expanded="false" class="bg-gray-700 rounded-lg p-4 flex flex-col items-center space-y-3 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600" id="day-tue-button" type="button">
+       <span class="text-lg font-semibold text-red-600">
+        Terça
+       </span>
+       <img alt="Thumbnail do exercício 2 para terça-feira mostrando uma pessoa fazendo supino reto com halteres em academia bem iluminada" class="rounded-md shadow-md" height="80" loading="lazy" src="https://storage.googleapis.com/a1aa/image/24ccba0f-01cd-4162-985c-40cbbd8fc72a.jpg" width="120"/>
+      </button>
+      <!-- Wednesday -->
+      <button aria-controls="day-wed" aria-expanded="false" class="bg-gray-700 rounded-lg p-4 flex flex-col items-center space-y-3 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600" id="day-wed-button" type="button">
+       <span class="text-lg font-semibold text-red-600">
+        Quarta
+       </span>
+       <img alt="Thumbnail do exercício 3 para quarta-feira mostrando uma pessoa fazendo levantamento terra com barra em academia moderna" class="rounded-md shadow-md" height="80" loading="lazy" src="https://storage.googleapis.com/a1aa/image/69fa5b9a-5213-4485-1d42-4f9dce5ec2bf.jpg" width="120"/>
+      </button>
+      <!-- Thursday -->
+      <button aria-controls="day-thu" aria-expanded="false" class="bg-gray-700 rounded-lg p-4 flex flex-col items-center space-y-3 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600" id="day-thu-button" type="button">
+       <span class="text-lg font-semibold text-red-600">
+        Quinta
+       </span>
+       <img alt="Thumbnail do exercício 4 para quinta-feira mostrando uma pessoa fazendo remada curvada com barra em academia bem equipada" class="rounded-md shadow-md" height="80" loading="lazy" src="https://storage.googleapis.com/a1aa/image/4c4fc51b-85b2-4aed-5ec7-087057e81b3c.jpg" width="120"/>
+      </button>
+      <!-- Friday -->
+      <button aria-controls="day-fri" aria-expanded="false" class="bg-gray-700 rounded-lg p-4 flex flex-col items-center space-y-3 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600" id="day-fri-button" type="button">
+       <span class="text-lg font-semibold text-red-600">
+        Sexta
+       </span>
+       <img alt="Thumbnail do exercício 5 para sexta-feira mostrando uma pessoa fazendo desenvolvimento de ombro com halteres em academia moderna" class="rounded-md shadow-md" height="80" loading="lazy" src="https://storage.googleapis.com/a1aa/image/ab152d88-cab7-4c2a-4134-52002110f272.jpg" width="120"/>
+      </button>
+      <!-- Saturday -->
+      <button aria-controls="day-sat" aria-expanded="false" class="bg-gray-700 rounded-lg p-4 flex flex-col items-center space-y-3 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600" id="day-sat-button" type="button">
+       <span class="text-lg font-semibold text-red-600">
+        Sábado
+       </span>
+       <img alt="Thumbnail do exercício 6 para sábado mostrando uma pessoa fazendo abdominal prancha em ambiente de academia" class="rounded-md shadow-md" height="80" loading="lazy" src="https://storage.googleapis.com/a1aa/image/29abaaaa-1540-41f3-7ef8-71375bd1e155.jpg" width="120"/>
+      </button>
+      <!-- Sunday -->
+      <button aria-controls="day-sun" aria-expanded="false" class="bg-gray-700 rounded-lg p-4 flex flex-col items-center space-y-3 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600" id="day-sun-button" type="button">
+       <span class="text-lg font-semibold text-red-600">
+        Domingo
+       </span>
+       <img alt="Thumbnail para domingo mostrando uma imagem relaxante de descanso com natureza e luz suave" class="rounded-md shadow-md" height="80" loading="lazy" src="https://storage.googleapis.com/a1aa/image/03c84820-298f-48a5-104f-8a54f07678fb.jpg" width="120"/>
+      </button>
+     </div>
+     <!-- Exercise details panels -->
+     <div class="mt-6 space-y-6 max-w-4xl mx-auto">
+      <!-- Monday details -->
+      <div aria-labelledby="day-mon-button" class="hidden bg-gray-700 rounded-lg p-5 shadow-inner" id="day-mon" role="region">
+       <h3 class="text-xl font-semibold text-red-600 mb-3 select-none">
+        Segunda-feira - Agachamento com Barra
+       </h3>
+       <video aria-label="Vídeo demonstrativo do exercício agachamento com barra" class="w-full rounded-md shadow-md mb-4" controls="" poster="https://placehold.co/640x360/png?text=Vídeo+Agachamento+com+Barra">
+        <source src="https://placehold.co/640x360/mp4?text=Vídeo+Agachamento+com+Barra" type="video/mp4"/>
+        Seu navegador não suporta o elemento de vídeo.
+       </video>
+       <p class="text-gray-300 mb-2">
+        Séries:
+        <span class="font-semibold">
+         4
+        </span>
+        | Repetições:
+        <span class="font-semibold">
+         8-10
+        </span>
+        | Descanso:
+        <span class="font-semibold">
+         90s
+        </span>
+       </p>
+       <p class="text-gray-300 mb-4">
+        Comentário do Sidney: Mantenha a coluna reta e o core firme durante todo o movimento para evitar lesões.
+       </p>
+       <button aria-pressed="false" class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md text-white font-semibold focus:outline-none focus:ring-2 focus:ring-red-500" id="checkin-mon" type="button">
+        <i class="fas fa-check mr-2">
+        </i>
+        Marcar Conclusão
+       </button>
+      </div>
+      <!-- Tuesday details -->
+      <div aria-labelledby="day-tue-button" class="hidden bg-gray-700 rounded-lg p-5 shadow-inner" id="day-tue" role="region">
+       <h3 class="text-xl font-semibold text-red-600 mb-3 select-none">
+        Terça-feira - Supino Reto com Halteres
+       </h3>
+       <video aria-label="Vídeo demonstrativo do exercício supino reto com halteres" class="w-full rounded-md shadow-md mb-4" controls="" poster="https://placehold.co/640x360/png?text=Vídeo+Supino+Reto+com+Halteres">
+        <source src="https://placehold.co/640x360/mp4?text=Vídeo+Supino+Reto+com+Halteres" type="video/mp4"/>
+        Seu navegador não suporta o elemento de vídeo.
+       </video>
+       <p class="text-gray-300 mb-2">
+        Séries:
+        <span class="font-semibold">
+         4
+        </span>
+        | Repetições:
+        <span class="font-semibold">
+         10-12
+        </span>
+        | Descanso:
+        <span class="font-semibold">
+         60s
+        </span>
+       </p>
+       <p class="text-gray-300 mb-4">
+        Comentário do Sidney: Controle a descida e evite esticar demais os cotovelos para proteger as articulações.
+       </p>
+       <button aria-pressed="false" class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md text-white font-semibold focus:outline-none focus:ring-2 focus:ring-red-500" id="checkin-tue" type="button">
+        <i class="fas fa-check mr-2">
+        </i>
+        Marcar Conclusão
+       </button>
+      </div>
+      <!-- Wednesday details -->
+      <div aria-labelledby="day-wed-button" class="hidden bg-gray-700 rounded-lg p-5 shadow-inner" id="day-wed" role="region">
+       <h3 class="text-xl font-semibold text-red-600 mb-3 select-none">
+        Quarta-feira - Levantamento Terra com Barra
+       </h3>
+       <video aria-label="Vídeo demonstrativo do exercício levantamento terra com barra" class="w-full rounded-md shadow-md mb-4" controls="" poster="https://placehold.co/640x360/png?text=Vídeo+Levantamento+Terra+com+Barra">
+        <source src="https://placehold.co/640x360/mp4?text=Vídeo+Levantamento+Terra+com+Barra" type="video/mp4"/>
+        Seu navegador não suporta o elemento de vídeo.
+       </video>
+       <p class="text-gray-300 mb-2">
+        Séries:
+        <span class="font-semibold">
+         3
+        </span>
+        | Repetições:
+        <span class="font-semibold">
+         6-8
+        </span>
+        | Descanso:
+        <span class="font-semibold">
+         120s
+        </span>
+       </p>
+       <p class="text-gray-300 mb-4">
+        Comentário do Sidney: Mantenha a coluna neutra e concentre a força nos glúteos e posteriores de coxa.
+       </p>
+       <button aria-pressed="false" class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md text-white font-semibold focus:outline-none focus:ring-2 focus:ring-red-500" id="checkin-wed" type="button">
+        <i class="fas fa-check mr-2">
+        </i>
+        Marcar Conclusão
+       </button>
+      </div>
+      <!-- Thursday details -->
+      <div aria-labelledby="day-thu-button" class="hidden bg-gray-700 rounded-lg p-5 shadow-inner" id="day-thu" role="region">
+       <h3 class="text-xl font-semibold text-red-600 mb-3 select-none">
+        Quinta-feira - Remada Curvada com Barra
+       </h3>
+       <video aria-label="Vídeo demonstrativo do exercício remada curvada com barra" class="w-full rounded-md shadow-md mb-4" controls="" poster="https://placehold.co/640x360/png?text=Vídeo+Remada+Curvada+com+Barra">
+        <source src="https://placehold.co/640x360/mp4?text=Vídeo+Remada+Curvada+com+Barra" type="video/mp4"/>
+        Seu navegador não suporta o elemento de vídeo.
+       </video>
+       <p class="text-gray-300 mb-2">
+        Séries:
+        <span class="font-semibold">
+         4
+        </span>
+        | Repetições:
+        <span class="font-semibold">
+         8-10
+        </span>
+        | Descanso:
+        <span class="font-semibold">
+         90s
+        </span>
+       </p>
+       <p class="text-gray-300 mb-4">
+        Comentário do Sidney: Evite curvar demais a coluna e puxe com os cotovelos para ativar as costas corretamente.
+       </p>
+       <button aria-pressed="false" class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md text-white font-semibold focus:outline-none focus:ring-2 focus:ring-red-500" id="checkin-thu" type="button">
+        <i class="fas fa-check mr-2">
+        </i>
+        Marcar Conclusão
+       </button>
+      </div>
+      <!-- Friday details -->
+      <div aria-labelledby="day-fri-button" class="hidden bg-gray-700 rounded-lg p-5 shadow-inner" id="day-fri" role="region">
+       <h3 class="text-xl font-semibold text-red-600 mb-3 select-none">
+        Sexta-feira - Desenvolvimento de Ombro com Halteres
+       </h3>
+       <video aria-label="Vídeo demonstrativo do exercício desenvolvimento de ombro com halteres" class="w-full rounded-md shadow-md mb-4" controls="" poster="https://placehold.co/640x360/png?text=Vídeo+Desenvolvimento+de+Ombro+com+Halteres">
+        <source src="https://placehold.co/640x360/mp4?text=Vídeo+Desenvolvimento+de+Ombro+com+Halteres" type="video/mp4"/>
+        Seu navegador não suporta o elemento de vídeo.
+       </video>
+       <p class="text-gray-300 mb-2">
+        Séries:
+        <span class="font-semibold">
+         3
+        </span>
+        | Repetições:
+        <span class="font-semibold">
+         10-12
+        </span>
+        | Descanso:
+        <span class="font-semibold">
+         60s
+        </span>
+       </p>
+       <p class="text-gray-300 mb-4">
+        Comentário do Sidney: Mantenha o tronco firme e evite arquear as costas durante o movimento.
+       </p>
+       <button aria-pressed="false" class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md text-white font-semibold focus:outline-none focus:ring-2 focus:ring-red-500" id="checkin-fri" type="button">
+        <i class="fas fa-check mr-2">
+        </i>
+        Marcar Conclusão
+       </button>
+      </div>
+      <!-- Saturday details -->
+      <div aria-labelledby="day-sat-button" class="hidden bg-gray-700 rounded-lg p-5 shadow-inner" id="day-sat" role="region">
+       <h3 class="text-xl font-semibold text-red-600 mb-3 select-none">
+        Sábado - Abdominal Prancha
+       </h3>
+       <video aria-label="Vídeo demonstrativo do exercício abdominal prancha" class="w-full rounded-md shadow-md mb-4" controls="" poster="https://placehold.co/640x360/png?text=Vídeo+Abdominal+Prancha">
+        <source src="https://placehold.co/640x360/mp4?text=Vídeo+Abdominal+Prancha" type="video/mp4"/>
+        Seu navegador não suporta o elemento de vídeo.
+       </video>
+       <p class="text-gray-300 mb-2">
+        Séries:
+        <span class="font-semibold">
+         3
+        </span>
+        | Tempo:
+        <span class="font-semibold">
+         60s
+        </span>
+        | Descanso:
+        <span class="font-semibold">
+         30s
+        </span>
+       </p>
+       <p class="text-gray-300 mb-4">
+        Comentário do Sidney: Mantenha o corpo alinhado e contraia o abdômen para maximizar o efeito.
+       </p>
+       <button aria-pressed="false" class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md text-white font-semibold focus:outline-none focus:ring-2 focus:ring-red-500" id="checkin-sat" type="button">
+        <i class="fas fa-check mr-2">
+        </i>
+        Marcar Conclusão
+       </button>
+      </div>
+      <!-- Sunday details -->
+      <div aria-labelledby="day-sun-button" class="hidden bg-gray-700 rounded-lg p-5 shadow-inner text-center text-gray-300" id="day-sun" role="region">
+       <h3 class="text-xl font-semibold text-red-600 mb-3 select-none">
+        Domingo - Descanso
+       </h3>
+       <img alt="Imagem relaxante de descanso com natureza e luz suave para domingo" class="mx-auto rounded-md shadow-md mb-4" height="360" loading="lazy" src="https://storage.googleapis.com/a1aa/image/da2b2476-93c5-4d01-7050-a440f4d5b4ff.jpg" width="640"/>
+       <p>
+        Dia dedicado à recuperação e descanso para melhor desempenho na próxima semana.
+       </p>
+      </div>
+     </div>
+    </section>
+    <!-- Nutrition section -->
+    <section aria-label="Seção de nutrição e cardápio individualizado" class="max-w-7xl mx-auto bg-gray-800 rounded-lg shadow-lg p-6" id="dieta">
+     <h2 class="text-2xl font-bold text-red-600 mb-4 select-none">
+      Nutrição - Cardápio Individualizado
+     </h2>
+     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-4 sm:space-y-0">
+      <div class="flex space-x-3 justify-center sm:justify-start">
+       <button class="filter-btn px-4 py-2 rounded-md bg-red-600 text-white font-semibold hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500" data-filter="all" type="button">
+        Todos
+       </button>
+       <button class="filter-btn px-4 py-2 rounded-md bg-gray-700 text-gray-300 hover:bg-red-700 hover:text-white font-semibold focus:outline-none focus:ring-2 focus:ring-red-500" data-filter="cafe" type="button">
+        Café da Manhã
+       </button>
+       <button class="filter-btn px-4 py-2 rounded-md bg-gray-700 text-gray-300 hover:bg-red-700 hover:text-white font-semibold focus:outline-none focus:ring-2 focus:ring-red-500" data-filter="almoco" type="button">
+        Almoço
+       </button>
+       <button class="filter-btn px-4 py-2 rounded-md bg-gray-700 text-gray-300 hover:bg-red-700 hover:text-white font-semibold focus:outline-none focus:ring-2 focus:ring-red-500" data-filter="jantar" type="button">
+        Jantar
+       </button>
+       <button class="filter-btn px-4 py-2 rounded-md bg-gray-700 text-gray-300 hover:bg-red-700 hover:text-white font-semibold focus:outline-none focus:ring-2 focus:ring-red-500" data-filter="lanches" type="button">
+        Lanches
+       </button>
+      </div>
+      <p class="text-gray-400 text-sm select-none">
+       Atualizado semanalmente conforme objetivos e preferências
+      </p>
+     </div>
+     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <!-- 15 food items -->
+      <article aria-label="Café da manhã: Omelete de claras com espinafre, 3 claras, 1 xícara de espinafre, 1 fatia de pão integral" class="bg-gray-700 rounded-lg shadow-md overflow-hidden filter-item cafe" tabindex="0">
+       <img alt="Prato de omelete de claras com espinafre, servido em prato branco com pão integral ao lado, em mesa de madeira clara" class="w-full h-48 object-cover" height="250" loading="lazy" src="https://storage.googleapis.com/a1aa/image/6335229a-e797-49bb-057e-d3e662d13146.jpg" width="400"/>
+       <div class="p-4">
+        <h3 class="text-lg font-semibold text-red-600 mb-1">
+         Omelete de Claras com Espinafre
+        </h3>
+        <p class="text-gray-300 text-sm mb-1">
+         3 claras, 1 xícara de espinafre, 1 fatia de pão integral
+        </p>
+        <p class="text-gray-400 text-xs italic">
+         Horário: 7h30
+        </p>
+       </div>
+      </article>
+      <article aria-label="Almoço: Peito de frango grelhado com arroz integral e brócolis, 150g de frango, 100g de arroz, 1 xícara de brócolis" class="bg-gray-700 rounded-lg shadow-md overflow-hidden filter-item almoco" tabindex="0">
+       <img alt="Prato com peito de frango grelhado, arroz integral e brócolis cozido, servido em prato branco sobre mesa escura" class="w-full h-48 object-cover" height="250" loading="lazy" src="https://storage.googleapis.com/a1aa/image/235cc6b9-80e5-4852-0d7c-c49e2f4ee3d2.jpg" width="400"/>
+       <div class="p-4">
+        <h3 class="text-lg font-semibold text-red-600 mb-1">
+         Peito de Frango Grelhado
+        </h3>
+        <p class="text-gray-300 text-sm mb-1">
+         150g de frango, 100g de arroz integral, 1 xícara de brócolis
+        </p>
+        <p class="text-gray-400 text-xs italic">
+         Horário: 12h30
+        </p>
+       </div>
+      </article>
+      <article aria-label="Jantar: Salmão assado com quinoa e aspargos, 150g de salmão, 80g de quinoa, 1 xícara de aspargos" class="bg-gray-700 rounded-lg shadow-md overflow-hidden filter-item jantar" tabindex="0">
+       <img alt="Prato com salmão assado, quinoa e aspargos grelhados, servido em prato branco sobre mesa de madeira escura" class="w-full h-48 object-cover" height="250" loading="lazy" src="https://storage.googleapis.com/a1aa/image/8fac6f56-174b-4b70-ffbf-4f11beb110fd.jpg" width="400"/>
+       <div class="p-4">
+        <h3 class="text-lg font-semibold text-red-600 mb-1">
+         Salmão Assado com Quinoa
+        </h3>
+        <p class="text-gray-300 text-sm mb-1">
+         150g de salmão, 80g de quinoa, 1 xícara de aspargos
+        </p>
+        <p class="text-gray-400 text-xs italic">
+         Horário: 19h00
+        </p>
+       </div>
+      </article>
+      <article aria-label="Lanche: Iogurte natural com mix de castanhas, 150g de iogurte, 30g de castanhas variadas" class="bg-gray-700 rounded-lg shadow-md overflow-hidden filter-item lanches" tabindex="0">
+       <img alt="Tigela com iogurte natural e mix de castanhas por cima, em fundo neutro claro" class="w-full h-48 object-cover" height="250" loading="lazy" src="https://storage.googleapis.com/a1aa/image/f0ae3dbf-f39a-4216-0692-72f6aac09cd9.jpg" width="400"/>
+       <div class="p-4">
+        <h3 class="text-lg font-semibold text-red-600 mb-1">
+         Iogurte Natural com Castanhas
+        </h3>
+        <p class="text-gray-300 text-sm mb-1">
+         150g de iogurte, 30g de castanhas variadas
+        </p>
+        <p class="text-gray-400 text-xs italic">
+         Horário: 16h00
+        </p>
+       </div>
+      </article>
+      <article aria-label="Café da manhã: Vitamina de banana com aveia, 1 banana, 200ml de leite desnatado, 2 colheres de aveia" class="bg-gray-700 rounded-lg shadow-md overflow-hidden filter-item cafe" tabindex="0">
+       <img alt="Copo com vitamina de banana com aveia, cor amarelada, servido com canudo em fundo neutro" class="w-full h-48 object-cover" height="250" loading="lazy" src="https://storage.googleapis.com/a1aa/image/6449a6c2-d52f-4ab2-e26f-d1b790e42911.jpg" width="400"/>
+       <div class="p-4">
+        <h3 class="text-lg font-semibold text-red-600 mb-1">
+         Vitamina de Banana com Aveia
+        </h3>
+        <p class="text-gray-300 text-sm mb-1">
+         1 banana, 200ml leite desnatado, 2 colheres de aveia
+        </p>
+        <p class="text-gray-400 text-xs italic">
+         Horário: 8h00
+        </p>
+       </div>
+      </article>
+      <article aria-label="Almoço: Filé de tilápia grelhado com batata doce e salada, 150g de tilápia, 100g de batata doce, salada verde" class="bg-gray-700 rounded-lg shadow-md overflow-hidden filter-item almoco" tabindex="0">
+       <img alt="Prato com filé de tilápia grelhado, batata doce cozida e salada verde, servido em prato branco" class="w-full h-48 object-cover" height="250" loading="lazy" src="https://storage.googleapis.com/a1aa/image/71503516-2e62-43c3-9b1f-4d8418e798dd.jpg" width="400"/>
+       <div class="p-4">
+        <h3 class="text-lg font-semibold text-red-600 mb-1">
+         Filé de Tilápia Grelhado
+        </h3>
+        <p class="text-gray-300 text-sm mb-1">
+         150g de tilápia, 100g de batata doce, salada verde
+        </p>
+        <p class="text-gray-400 text-xs italic">
+         Horário: 13h00
+        </p>
+       </div>
+      </article>
+      <article aria-label="Jantar: Omelete de legumes com queijo branco, 3 ovos, legumes variados, 30g queijo branco" class="bg-gray-700 rounded-lg shadow-md overflow-hidden filter-item jantar" tabindex="0">
+       <img alt="Prato com omelete de legumes coloridos e queijo branco, servido em prato branco sobre mesa escura" class="w-full h-48 object-cover" height="250" loading="lazy" src="https://storage.googleapis.com/a1aa/image/e79633b6-0bc1-49e4-880e-078e61cab981.jpg" width="400"/>
+       <div class="p-4">
+        <h3 class="text-lg font-semibold text-red-600 mb-1">
+         Omelete de Legumes com Queijo
+        </h3>
+        <p class="text-gray-300 text-sm mb-1">
+         3 ovos, legumes variados, 30g queijo branco
+        </p>
+        <p class="text-gray-400 text-xs italic">
+         Horário: 19h30
+        </p>
+       </div>
+      </article>
+      <article aria-label="Lanche: Barrinha de proteína caseira, 50g" class="bg-gray-700 rounded-lg shadow-md overflow-hidden filter-item lanches" tabindex="0">
+       <img alt="Barrinha de proteína caseira cortada em pedaços, sobre fundo neutro escuro" class="w-full h-48 object-cover" height="250" loading="lazy" src="https://storage.googleapis.com/a1aa/image/4e2ad987-9e5e-41d9-f0be-3c0020eec731.jpg" width="400"/>
+       <div class="p-4">
+        <h3 class="text-lg font-semibold text-red-600 mb-1">
+         Barrinha de Proteína Caseira
+        </h3>
+        <p class="text-gray-300 text-sm mb-1">
+         50g
+        </p>
+        <p class="text-gray-400 text-xs italic">
+         Horário: 17h00
+        </p>
+       </div>
+      </article>
+      <article aria-label="Café da manhã: Tapioca com queijo coalho e tomate, 1 unidade média" class="bg-gray-700 rounded-lg shadow-md overflow-hidden filter-item cafe" tabindex="0">
+       <img alt="Prato com tapioca recheada com queijo coalho e tomate, servido em prato branco" class="w-full h-48 object-cover" height="250" loading="lazy" src="https://storage.googleapis.com/a1aa/image/8fee0236-3693-4549-e071-1ca28350d663.jpg" width="400"/>
+       <div class="p-4">
+        <h3 class="text-lg font-semibold text-red-600 mb-1">
+         Tapioca com Queijo Coalho
+        </h3>
+        <p class="text-gray-300 text-sm mb-1">
+         1 unidade média
+        </p>
+        <p class="text-gray-400 text-xs italic">
+         Horário: 7h00
+        </p>
+       </div>
+      </article>
+      <article aria-label="Almoço: Carne magra moída com purê de batata doce e salada, 150g carne, 100g purê, salada verde" class="bg-gray-700 rounded-lg shadow-md overflow-hidden filter-item almoco" tabindex="0">
+       <img alt="Prato com carne magra moída, purê de batata doce e salada verde, servido em prato branco" class="w-full h-48 object-cover" height="250" loading="lazy" src="https://storage.googleapis.com/a1aa/image/85862267-9057-4752-bf1d-951c146aae1f.jpg" width="400"/>
+       <div class="p-4">
+        <h3 class="text-lg font-semibold text-red-600 mb-1">
+         Carne Magra Moída
+        </h3>
+        <p class="text-gray-300 text-sm mb-1">
+         150g carne, 100g purê de batata doce, salada verde
+        </p>
+        <p class="text-gray-400 text-xs italic">
+         Horário: 12h45
+        </p>
+       </div>
+      </article>
+      <article aria-label="Jantar: Sopa de legumes com frango desfiado, 300ml" class="bg-gray-700 rounded-lg shadow-md overflow-hidden filter-item jantar" tabindex="0">
+       <img alt="Tigela com sopa de legumes e frango desfiado, em fundo neutro escuro" class="w-full h-48 object-cover" height="250" loading="lazy" src="https://storage.googleapis.com/a1aa/image/7ebcc977-3060-46de-d099-51a4e65a7f58.jpg" width="400"/>
+       <div class="p-4">
+        <h3 class="text-lg font-semibold text-red-600 mb-1">
+         Sopa de Legumes com Frango
+        </h3>
+        <p class="text-gray-300 text-sm mb-1">
+         300ml
+        </p>
+        <p class="text-gray-400 text-xs italic">
+         Horário: 20h00
+        </p>
+       </div>
+      </article>
+      <article aria-label="Lanche: Maçã com pasta de amendoim, 1 maçã média, 1 colher de sopa de pasta" class="bg-gray-700 rounded-lg shadow-md overflow-hidden filter-item lanches" tabindex="0">
+       <img alt="Maçã vermelha cortada ao meio com pasta de amendoim ao lado, sobre fundo neutro claro" class="w-full h-48 object-cover" height="250" loading="lazy" src="https://storage.googleapis.com/a1aa/image/a9f0a5ed-6570-4d7e-3853-df8164fd2aea.jpg" width="400"/>
+       <div class="p-4">
+        <h3 class="text-lg font-semibold text-red-600 mb-1">
+         Maçã com Pasta de Amendoim
+        </h3>
+        <p class="text-gray-300 text-sm mb-1">
+         1 maçã média, 1 colher de sopa de pasta
+        </p>
+        <p class="text-gray-400 text-xs italic">
+         Horário: 15h30
+        </p>
+       </div>
+      </article>
+      <article aria-label="Café da manhã: Pão integral com abacate e ovo pochê, 1 fatia de pão, 1/2 abacate, 1 ovo" class="bg-gray-700 rounded-lg shadow-md overflow-hidden filter-item cafe" tabindex="0">
+       <img alt="Fatias de pão integral com abacate amassado e ovo pochê, servido em prato branco" class="w-full h-48 object-cover" height="250" loading="lazy" src="https://storage.googleapis.com/a1aa/image/cedf7085-4af2-4363-ff7c-ca59ecab7940.jpg" width="400"/>
+       <div class="p-4">
+        <h3 class="text-lg font-semibold text-red-600 mb-1">
+         Pão Integral com Abacate e Ovo
+        </h3>
+        <p class="text-gray-300 text-sm mb-1">
+         1 fatia de pão, 1/2 abacate, 1 ovo pochê
+        </p>
+        <p class="text-gray-400 text-xs italic">
+         Horário: 8h30
+        </p>
+       </div>
+      </article>
+      <article aria-label="Almoço: Strogonoff de frango com arroz integral e salada, 150g frango, 100g arroz, salada verde" class="bg-gray-700 rounded-lg shadow-md overflow-hidden filter-item almoco" tabindex="0">
+       <img alt="Prato com strogonoff de frango, arroz integral e salada verde, servido em prato branco" class="w-full h-48 object-cover" height="250" loading="lazy" src="https://storage.googleapis.com/a1aa/image/a861ae89-09c3-42ca-6c6d-ce8ff776baa5.jpg" width="400"/>
+       <div class="p-4">
+        <h3 class="text-lg font-semibold text-red-600 mb-1">
+         Strogonoff de Frango
+        </h3>
+        <p class="text-gray-300 text-sm mb-1">
+         150g frango, 100g arroz integral, salada verde
+        </p>
+        <p class="text-gray-400 text-xs italic">
+         Horário: 13h30
+        </p>
+       </div>
+      </article>
+     </div>
+    </section>
+    <!-- Avaliações section -->
+    <section aria-label="Módulo de avaliações físicas e exames" class="max-w-7xl mx-auto bg-gray-800 rounded-lg shadow-lg p-6" id="avaliacoes">
+     <h2 class="text-2xl font-bold text-red-600 mb-6 select-none">
+      Avaliações Físicas
+     </h2>
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Gráfico IMC -->
+      <div class="bg-gray-700 rounded-lg p-4 shadow-inner">
+       <h3 class="text-lg font-semibold text-red-600 mb-3 select-none">
+        IMC (Índice de Massa Corporal)
+       </h3>
+       <img alt="Gráfico de linha mostrando evolução do IMC do usuário com datas e projeções futuras, em cores vermelho queimado e cinza escuro" class="w-full rounded-md" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/b9cddcbc-cde3-42a2-b9a2-fcae97e1a869.jpg" width="600"/>
+      </div>
+      <!-- Gráfico Percentual de Gordura -->
+      <div class="bg-gray-700 rounded-lg p-4 shadow-inner">
+       <h3 class="text-lg font-semibold text-red-600 mb-3 select-none">
+        Percentual de Gordura Corporal
+       </h3>
+       <img alt="Gráfico de linha mostrando evolução do percentual de gordura corporal do usuário com datas e projeções futuras, em cores vermelho queimado e cinza escuro" class="w-full rounded-md" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/05847e82-f06f-47ce-a2c2-958ecfcf571b.jpg" width="600"/>
+      </div>
+      <!-- Gráfico Peso -->
+      <div class="bg-gray-700 rounded-lg p-4 shadow-inner">
+       <h3 class="text-lg font-semibold text-red-600 mb-3 select-none">
+        Peso Corporal
+       </h3>
+       <img alt="Gráfico de linha mostrando evolução do peso corporal do usuário com datas e projeções futuras, em cores vermelho queimado e cinza escuro" class="w-full rounded-md" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/39161fed-75f4-41ea-6b4b-a8fdc5d14f05.jpg" width="600"/>
+      </div>
+      <!-- Gráfico Medidas Corporais -->
+      <div class="bg-gray-700 rounded-lg p-4 shadow-inner">
+       <h3 class="text-lg font-semibold text-red-600 mb-3 select-none">
+        Medidas Corporais
+       </h3>
+       <img alt="Gráfico de linha mostrando evolução das medidas corporais do usuário com datas e projeções futuras, em cores vermelho queimado e cinza escuro" class="w-full rounded-md" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/bc1a2f75-6e2a-4e8c-94d4-5e609b645608.jpg" width="600"/>
+      </div>
+     </div>
+    </section>
+    <!-- Vídeos sob demanda -->
+    <section aria-label="Galeria de vídeos sob demanda" class="max-w-7xl mx-auto bg-gray-800 rounded-lg shadow-lg p-6" id="videos">
+     <h2 class="text-2xl font-bold text-red-600 mb-6 select-none">
+      Vídeos Sob Demanda
+     </h2>
+     <div class="overflow-x-auto -mx-6 px-6">
+      <div class="flex space-x-6 min-w-[900px]">
+       <!-- 12 video thumbnails -->
+       <article aria-label="Vídeo sobre hipertrofia: Treino de peito avançado com Sidney Santos" class="w-64 flex-shrink-0 bg-gray-700 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300" tabindex="0">
+        <img alt="Thumbnail do vídeo de treino avançado de peito para hipertrofia, mostrando Sidney Santos demonstrando exercício em academia" class="w-full h-36 object-cover rounded-t-lg" height="144" loading="lazy" src="https://storage.googleapis.com/a1aa/image/82a23220-5893-4b70-b597-150c012ad32a.jpg" width="256"/>
+        <div class="p-3">
+         <h3 class="text-red-600 font-semibold text-lg truncate">
+          Hipertrofia - Treino de Peito
+         </h3>
+         <p class="text-gray-400 text-sm truncate">
+          Treino avançado para ganho muscular no peitoral
+         </p>
+        </div>
+       </article>
+       <article aria-label="Vídeo sobre emagrecimento: Circuito funcional para queima de gordura" class="w-64 flex-shrink-0 bg-gray-700 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300" tabindex="0">
+        <img alt="Thumbnail do vídeo de circuito funcional para queima de gordura, mostrando pessoas em treino intenso ao ar livre" class="w-full h-36 object-cover rounded-t-lg" height="144" loading="lazy" src="https://storage.googleapis.com/a1aa/image/e856a8f6-360b-47be-7b49-60f16399e723.jpg" width="256"/>
+        <div class="p-3">
+         <h3 class="text-red-600 font-semibold text-lg truncate">
+          Emagrecimento - Circuito Funcional
+         </h3>
+         <p class="text-gray-400 text-sm truncate">
+          Treino para queima de gordura e condicionamento físico
+         </p>
+        </div>
+       </article>
+       <article aria-label="Vídeo sobre resistência: Treino de corrida intervalada com Sidney Santos" class="w-64 flex-shrink-0 bg-gray-700 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300" tabindex="0">
+        <img alt="Thumbnail do vídeo de treino de corrida intervalada para resistência, mostrando Sidney Santos correndo em pista" class="w-full h-36 object-cover rounded-t-lg" height="144" loading="lazy" src="https://storage.googleapis.com/a1aa/image/186c5a26-054e-433b-62b1-8c3a338895a9.jpg" width="256"/>
+        <div class="p-3">
+         <h3 class="text-red-600 font-semibold text-lg truncate">
+          Resistência - Corrida Intervalada
+         </h3>
+         <p class="text-gray-400 text-sm truncate">
+          Treino para melhorar resistência cardiovascular e muscular
+         </p>
+        </div>
+       </article>
+       <article aria-label="Vídeo sobre biomecânica: Análise técnica do agachamento com Sidney Santos" class="w-64 flex-shrink-0 bg-gray-700 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300" tabindex="0">
+        <img alt="Thumbnail do vídeo de análise técnica do agachamento, mostrando Sidney Santos explicando postura correta" class="w-full h-36 object-cover rounded-t-lg" height="144" loading="lazy" src="https://storage.googleapis.com/a1aa/image/f05edb05-eb4e-42f8-53ff-887af41ef499.jpg" width="256"/>
+        <div class="p-3">
+         <h3 class="text-red-600 font-semibold text-lg truncate">
+          Biomecânica - Agachamento
+         </h3>
+         <p class="text-gray-400 text-sm truncate">
+          Explicação detalhada da execução correta do agachamento
+         </p>
+        </div>
+       </article>
+       <article aria-label="Vídeo sobre mentalidade: Motivação e disciplina para treinos diários" class="w-64 flex-shrink-0 bg-gray-700 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300" tabindex="0">
+        <img alt="Thumbnail do vídeo sobre motivação e disciplina para treinos diários, mostrando Sidney Santos falando para câmera" class="w-full h-36 object-cover rounded-t-lg" height="144" loading="lazy" src="https://storage.googleapis.com/a1aa/image/3e31b25e-10c1-491b-5daa-041dcffcf4b3.jpg" width="256"/>
+        <div class="p-3">
+         <h3 class="text-red-600 font-semibold text-lg truncate">
+          Mentalidade - Motivação e Disciplina
+         </h3>
+         <p class="text-gray-400 text-sm truncate">
+          Dicas para manter a disciplina e motivação nos treinos
+         </p>
+        </div>
+       </article>
+       <article aria-label="Vídeo sobre hipertrofia: Treino de costas e bíceps" class="w-64 flex-shrink-0 bg-gray-700 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300" tabindex="0">
+        <img alt="Thumbnail do vídeo de treino para hipertrofia de costas e bíceps, mostrando Sidney Santos em academia" class="w-full h-36 object-cover rounded-t-lg" height="144" loading="lazy" src="https://storage.googleapis.com/a1aa/image/8f35cbcb-a747-4f70-7498-b653d700dfe1.jpg" width="256"/>
+        <div class="p-3">
+         <h3 class="text-red-600 font-semibold text-lg truncate">
+          Hipertrofia - Costas e Bíceps
+         </h3>
+         <p class="text-gray-400 text-sm truncate">
+          Treino focado em desenvolvimento muscular de costas e bíceps
+         </p>
+        </div>
+       </article>
+       <article aria-label="Vídeo sobre emagrecimento: Treino HIIT para queima rápida de gordura" class="w-64 flex-shrink-0 bg-gray-700 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300" tabindex="0">
+        <img alt="Thumbnail do vídeo de treino HIIT para emagrecimento, mostrando pessoas em treino intenso em academia" class="w-full h-36 object-cover rounded-t-lg" height="144" loading="lazy" src="https://storage.googleapis.com/a1aa/image/dc065a8a-5b46-4773-31a9-529e89b090bf.jpg" width="256"/>
+        <div class="p-3">
+         <h3 class="text-red-600 font-semibold text-lg truncate">
+          Emagrecimento - Treino HIIT
+         </h3>
+         <p class="text-gray-400 text-sm truncate">
+          Treino intervalado de alta intensidade para queima rápida de gordura
+         </p>
+        </div>
+       </article>
+       <article aria-label="Vídeo sobre resistência: Treino funcional para resistência muscular" class="w-64 flex-shrink-0 bg-gray-700 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300" tabindex="0">
+        <img alt="Thumbnail do vídeo de treino funcional para resistência muscular, mostrando exercícios com peso corporal" class="w-full h-36 object-cover rounded-t-lg" height="144" loading="lazy" src="https://storage.googleapis.com/a1aa/image/1bd5440e-4364-48c8-1dee-0325d2c17ad7.jpg" width="256"/>
+        <div class="p-3">
+         <h3 class="text-red-600 font-semibold text-lg truncate">
+          Resistência - Treino Funcional
+         </h3>
+         <p class="text-gray-400 text-sm truncate">
+          Exercícios funcionais para melhorar resistência muscular
+         </p>
+        </div>
+       </article>
+       <article aria-label="Vídeo sobre biomecânica: Correção postural para exercícios de força" class="w-64 flex-shrink-0 bg-gray-700 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300" tabindex="0">
+        <img alt="Thumbnail do vídeo sobre correção postural para exercícios de força, mostrando Sidney Santos corrigindo aluno" class="w-full h-36 object-cover rounded-t-lg" height="144" loading="lazy" src="https://storage.googleapis.com/a1aa/image/f7f32cf7-86a2-4c86-2f90-8419772c7bb3.jpg" width="256"/>
+        <div class="p-3">
+         <h3 class="text-red-600 font-semibold text-lg truncate">
+          Biomecânica - Correção Postural
+         </h3>
+         <p class="text-gray-400 text-sm truncate">
+          Dicas para evitar lesões corrigindo a postura nos exercícios
+         </p>
+        </div>
+       </article>
+       <article aria-label="Vídeo sobre mentalidade: Técnicas de foco e concentração para treinos" class="w-64 flex-shrink-0 bg-gray-700 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300" tabindex="0">
+        <img alt="Thumbnail do vídeo sobre técnicas de foco e concentração para treinos, mostrando Sidney Santos meditando" class="w-full h-36 object-cover rounded-t-lg" height="144" loading="lazy" src="https://storage.googleapis.com/a1aa/image/656570fd-87c3-43b9-c01d-38957a117c1b.jpg" width="256"/>
+        <div class="p-3">
+         <h3 class="text-red-600 font-semibold text-lg truncate">
+          Mentalidade - Foco e Concentração
+         </h3>
+         <p class="text-gray-400 text-sm truncate">
+          Técnicas para melhorar foco e concentração durante os treinos
+         </p>
+        </div>
+       </article>
+      </div>
+     </div>
+    </section>
+   </main>
+   <!-- Sidebar right -->
+   <aside aria-label="Aba lateral com alertas, mensagens motivacionais e lembretes" class="hidden md:flex flex-col w-80 bg-gray-800 border-l border-gray-700 shadow-inner overflow-y-auto transition-transform duration-300 ease-in-out" id="sidebar">
+    <div class="flex items-center justify-between p-4 border-b border-gray-700">
+     <h2 class="text-lg font-bold text-red-600 select-none">
+      Aba Lateral
+     </h2>
+     <button aria-label="Recolher aba lateral" class="text-gray-300 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 rounded" id="sidebar-toggle">
+      <i class="fas fa-chevron-right">
+      </i>
+     </button>
+    </div>
+    <div class="p-4 space-y-6">
+     <!-- Alertas -->
+     <section aria-labelledby="alertas-title">
+      <h3 class="text-red-600 font-semibold mb-3 select-none" id="alertas-title">
+       Alertas
+      </h3>
+      <ul class="space-y-3 text-gray-300 text-sm">
+       <li class="flex items-start space-x-3">
+        <i class="fas fa-exclamation-triangle text-red-600 mt-1">
+        </i>
+        <p>
+         Não esqueça de registrar sua hidratação diária para melhor acompanhamento.
+        </p>
+       </li>
+       <li class="flex items-start space-x-3">
+        <i class="fas fa-exclamation-triangle text-red-600 mt-1">
+        </i>
+        <p>
+         Consulta com Sidney agendada para
+         <time datetime="2024-07-10T15:00">
+          10 de julho, 15h
+         </time>
+         .
+        </p>
+       </li>
+      </ul>
+     </section>
+     <!-- Mensagens motivacionais -->
+     <section aria-labelledby="mensagens-motivacionais-title">
+      <h3 class="text-red-600 font-semibold mb-3 select-none" id="mensagens-motivacionais-title">
+       Mensagens Motivacionais
+      </h3>
+      <ul class="space-y-3 text-gray-300 text-sm italic">
+       <li>
+        “Disciplina é a ponte entre metas e realizações.”
+       </li>
+       <li>
+        “Cada treino é um passo a mais rumo à sua melhor versão.”
+       </li>
+       <li>
+        “A ciência do corpo é a arte da transformação.”
+       </li>
+      </ul>
+     </section>
+     <!-- Lembretes -->
+     <section aria-labelledby="lembretes-title">
+      <h3 class="text-red-600 font-semibold mb-3 select-none" id="lembretes-title">
+       Lembretes
+      </h3>
+      <ul class="space-y-3 text-gray-300 text-sm">
+       <li class="flex items-start space-x-3">
+        <i class="fas fa-bell text-red-600 mt-1">
+        </i>
+        <p>
+         Atualizar peso e medidas até
+         <time datetime="2024-07-01">
+          1º de julho
+         </time>
+         .
+        </p>
+       </li>
+       <li class="flex items-start space-x-3">
+        <i class="fas fa-bell text-red-600 mt-1">
+        </i>
+        <p>
+         Participar do desafio mensal “30 dias de agachamento”.
+        </p>
+       </li>
+      </ul>
+     </section>
+     <!-- Convites para lives e eventos -->
+     <section aria-labelledby="convites-title">
+      <h3 class="text-red-600 font-semibold mb-3 select-none" id="convites-title">
+       Convites Exclusivos
+      </h3>
+      <ul class="space-y-4 text-gray-300 text-sm">
+       <li class="bg-gray-700 rounded-md p-3 shadow-inner">
+        <p class="font-semibold">
+         Live: Técnicas Avançadas de Treino
+        </p>
+        <p class="text-xs">
+         Data:
+         <time datetime="2024-07-05T19:00">
+          5 de julho, 19h
+         </time>
+        </p>
+        <button class="mt-2 px-3 py-1 bg-red-600 hover:bg-red-700 rounded-md text-white text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-red-500" type="button">
+         Confirmar Presença
+        </button>
+       </li>
+       <li class="bg-gray-700 rounded-md p-3 shadow-inner">
+        <p class="font-semibold">
+         Evento Presencial: Workshop de Nutrição
+        </p>
+        <p class="text-xs">
+         Data:
+         <time datetime="2024-07-20T14:00">
+          20 de julho, 14h
+         </time>
+        </p>
+        <button class="mt-2 px-3 py-1 bg-red-600 hover:bg-red-700 rounded-md text-white text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-red-500" type="button">
+         Confirmar Presença
+        </button>
+       </li>
+       <li class="bg-gray-700 rounded-md p-3 shadow-inner">
+        <p class="font-semibold">
+         Desafio Mensal: 30 Dias de Agachamento
+        </p>
+        <p class="text-xs">
+         Início:
+         <time datetime="2024-07-01">
+          1º de julho
+         </time>
+        </p>
+        <button class="mt-2 px-3 py-1 bg-red-600 hover:bg-red-700 rounded-md text-white text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-red-500" type="button">
+         Participar
+        </button>
+       </li>
+      </ul>
+     </section>
+    </div>
+   </aside>
   </div>
-
   <script>
-   // Lantern follows cursor
-    const lantern = document.getElementById('lantern');
-    window.addEventListener('mousemove', (e) => {
-      const x = e.clientX;
-      const y = e.clientY;
-      lantern.style.left = x - lantern.offsetWidth / 2 + 'px';
-      lantern.style.top = y - lantern.offsetHeight / 2 + 'px';
+   // Toggle user dropdown
+    const userMenuButton = document.getElementById('user-menu-button');
+    const userDropdown = document.getElementById('user-dropdown');
+
+    userMenuButton.addEventListener('click', () => {
+      const expanded = userMenuButton.getAttribute('aria-expanded') === 'true';
+      userMenuButton.setAttribute('aria-expanded', !expanded);
+      userDropdown.classList.toggle('hidden');
     });
 
-    // Rain effect
-    const rainContainer = document.getElementById('rain');
-    const raindropCount = 100;
-    for (let i = 0; i < raindropCount; i++) {
-      const drop = document.createElement('div');
-      drop.classList.add('raindrop');
-      drop.style.left = Math.random() * 100 + 'vw';
-      drop.style.animationDuration = 0.5 + Math.random() * 0.7 + 's';
-      drop.style.animationDelay = Math.random() * 2 + 's';
-      drop.style.height = 10 + Math.random() * 10 + 'px';
-      drop.style.width = 1 + Math.random() * 1.5 + 'px';
-      rainContainer.appendChild(drop);
-    }
-
-    // Sparks effect - random occasional sparks
-    function createSpark() {
-      const spark = document.createElement('div');
-      spark.classList.add('spark');
-      spark.style.left = Math.random() * window.innerWidth + 'px';
-      spark.style.top = Math.random() * window.innerHeight + 'px';
-      spark.style.animationDuration = 1 + Math.random() * 1 + 's';
-      document.body.appendChild(spark);
-      setTimeout(() => {
-        spark.remove();
-      }, 2000);
-    }
-    setInterval(() => {
-      if (Math.random() < 0.15) {
-        createSpark();
+    // Close dropdown if clicked outside
+    document.addEventListener('click', (e) => {
+      if (
+        !userMenuButton.contains(e.target) &&
+        !userDropdown.contains(e.target)
+      ) {
+        userDropdown.classList.add('hidden');
+        userMenuButton.setAttribute('aria-expanded', 'false');
       }
-    }, 500);
+    });
 
-    // Dossiê ANNWN password form
-    const passwordForm = document.getElementById('password-form');
-    const passwordInput = document.getElementById('password');
-    const passwordError = document.getElementById('password-error');
-    const dossieContent = document.getElementById('dossie-content');
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-    passwordForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const password = passwordInput.value.trim();
-      if (password === 'annwn2024') {
-        passwordError.classList.add('hidden');
-        dossieContent.classList.remove('hidden');
-        passwordForm.classList.add('hidden');
-        dossieContent.focus();
+    mobileMenuButton.addEventListener('click', () => {
+      const expanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+      mobileMenuButton.setAttribute('aria-expanded', !expanded);
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Sidebar toggle
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    let sidebarVisible = true;
+
+    sidebarToggle.addEventListener('click', () => {
+      if (sidebarVisible) {
+        sidebar.style.transform = 'translateX(100%)';
+        sidebarToggle.innerHTML = '<i class="fas fa-chevron-left"></i>';
+        sidebarToggle.setAttribute('aria-label', 'Expandir aba lateral');
       } else {
-        passwordError.textContent = 'Senha incorreta. Tente novamente.';
-        passwordError.classList.remove('hidden');
-        passwordInput.focus();
+        sidebar.style.transform = 'translateX(0)';
+        sidebarToggle.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        sidebarToggle.setAttribute('aria-label', 'Recolher aba lateral');
       }
+      sidebarVisible = !sidebarVisible;
     });
 
-    // Modal functionality for "Ler mais"
-    const modal = document.getElementById('modal');
-    const modalContent = document.getElementById('modal-content');
-    const modalClose = document.getElementById('modal-close');
-    const readMoreButtons = document.querySelectorAll('.read-more-btn');
+    // Plano de treino semanal - toggle exercise details
+    const days = [
+      'mon',
+      'tue',
+      'wed',
+      'thu',
+      'fri',
+      'sat',
+      'sun',
+    ];
 
-    const articlesDetails = {
-      benjamin: `
-        <h2 class="text-3xl font-bold mb-4">🕯️ Julho de 1951 — Garoto some durante encenação de peça escolar; palco foi encontrado encharcado</h2>
-        <p>Benjamin Griggs desapareceu misteriosamente durante os ensaios finais da peça “A Tempestade”. Testemunhas afirmam que, após seu chamado para o monólogo, o palco ficou estranhamente silencioso, exceto pelo som das cortinas que se moviam sozinhas.</p>
-        <p>O palco estava molhado, como se uma inundação tivesse ocorrido, mas não havia sinais de água em outros locais. A diretora relatou ter ouvido uma voz grave e distorcida, dizendo: <em>“As palavras afogam, se você não aprender a engolir.”</em></p>
-        <p>Desde então, ecos de passos e sussurros são ouvidos no teatro abandonado, e sombras parecem se mover entre as cortinas, mesmo quando ninguém está lá.</p>
-       
-        <p>Moradores evitam passar perto do teatro à noite, pois dizem que a presença de Benjamin ainda assombra o local, preso entre as palavras não ditas e a água que nunca secou.</p>
-      `,
-      crawford: `
-        <h2 class="text-3xl font-bold mb-4">🌘 Outubro de 1963 — Família desaparece no jantar; mesa posta e lareira acesa</h2>
-        <p>A família Crawford desapareceu misteriosamente durante o jantar. Vizinhos ouviram sons de talheres e pratos até tarde da noite, mas ninguém jamais saiu da casa.</p>
-        <p>A polícia encontrou a residência trancada por dentro, com a mesa posta e a lareira ainda acesa. A sopa estava quente, e cada prato tinha uma colher flutuando lentamente em círculos, como se invisíveis mãos estivessem jantando.</p>
-        <p>Relatos falam de sombras que se movem pelas janelas e sussurros que pedem para “não olhar para trás”. Alguns dizem que a casa ainda emite sons de risadas distorcidas e passos arrastados.</p>
-      
-        <p>Desde então, ninguém ousa se aproximar da casa, que permanece como um monumento silencioso ao desaparecimento inexplicável.</p>
-      `,
-      ruthie: `
-        <h2 class="text-3xl font-bold mb-4">🎠 Maio de 1924 — Menina desaparece em carrossel desligado há décadas</h2>
-        <p>Ruthie Cormack foi vista pela última vez sorrindo para algo atrás do espelho do carrossel enferrujado no parque Holloway, fechado desde 1911.</p>
-        <p>O carrossel girou sozinho por exatamente uma volta antes de parar abruptamente, e Ruthie desapareceu sem deixar vestígios.</p>
-        <p>Uma risada infantil, distorcida e repetitiva, foi gravada em um vinil velho encontrado no chão próximo ao brinquedo, e moradores relatam ouvir o som do carrossel girando em noites silenciosas.</p>
-     
-        <p>O parque permanece fechado, mas a presença de Ruthie parece ainda brincar entre as sombras, esperando por uma volta que nunca mais virá.</p>
-      `,
-      coral: `
-        <h2 class="text-3xl font-bold mb-4">📻 Dezembro de 1939 — Coral infantil desaparece; padres ouvem canto vindo do solo da catedral</h2>
-        <p>Na noite de Natal, 12 crianças do coral da Catedral de St. Mary desapareceram misteriosamente da sacristia.</p>
-        <p>Na manhã seguinte, os vitrais estavam escurecidos, e um canto doce e afinado, em uma língua desconhecida, ecoava do chão da cripta.</p>
-        <p>Um padre, desesperado para silenciar o som, arrancou os próprios tímpanos, mas o canto persistiu, tornando-se um lamento que assombra a catedral até hoje.</p>
-   
-        <p>Visitantes relatam arrepios e vozes sussurrantes, como se o coral ainda cantasse para aqueles que ousam escutar.</p>
-      `,
-      michael: `
-        <h2 class="text-3xl font-bold mb-4">🪞 Agosto de 1972 — Garoto some após dizer que ‘vê o avesso das pessoas’</h2>
-        <p>Michael Withers, 11 anos, apresentava comportamento estranho, passando horas encarando o espelho do banheiro e falando sobre “mais gente aqui do que lá fora”.</p>
-        <p>Durante uma evacuação simulada, desapareceu sem deixar rastros. O espelho do banheiro foi encontrado rachado, mas as rachaduras pareciam vir de dentro para fora.</p>
-        <p>Funcionários da escola relatam que, às vezes, veem reflexos que não correspondem à realidade, e sussurros que alertam para “não confiar no que vê”.</p>
-    
-        <p>Alguns acreditam que Michael foi puxado para uma dimensão paralela, onde o avesso das pessoas é a única verdade.</p>
-      `,
-      henry: `
-        <h2 class="text-3xl font-bold mb-4">🌑 Fevereiro de 1919 — Trilhos do trem engolem menino; trilho continua reto, intacto</h2>
-        <p>Henry Lowell desapareceu enquanto brincava nos trilhos próximos ao cemitério velho.</p>
-        <p>Testemunhas afirmam que o viram correr, tropeçar e cair, mas não havia buraco ou sinal de queda.</p>
-        <p>Os trilhos permaneciam lisos e intactos, e na pedra próxima, alguém havia gravado com prego: <em>“O trem chegou, mesmo sem apitar.”</em></p>
-       
-        <p>Desde então, moradores evitam os trilhos, temendo que o trem invisível ainda passe, levando consigo aqueles que ousam se aproximar.</p>
-      `,
-      nellie: `
-        <h2 class="text-3xl font-bold mb-4">🔦 Novembro de 1986 — Quatro adolescentes relatam ter visto menina desaparecida ‘rindo de costas’</h2>
-        <p>Quatro adolescentes relataram ter visto Nellie Garner, desaparecida há três semanas, parada na floresta, rindo.</p>
-        <p>O riso vinha do lado oposto ao rosto — ela estava de costas, mas sorria com uma expressão que nenhum deles conseguiu esquecer.</p>
-        <p>Desde então, sons de risadas distorcidas e passos silenciosos são ouvidos na floresta, e sombras parecem seguir aqueles que se aventuram por ali.</p>
-    
-        <p>Os jovens juram que o riso ainda ecoa, um aviso sombrio para quem ousa olhar para trás.</p>
-      `
-    };
+    days.forEach((day) => {
+      const btn = document.getElementById(`day-${day}-button`);
+      const panel = document.getElementById(`day-${day}`);
 
-    function openModal(articleKey) {
-      modalContent.innerHTML = articlesDetails[articleKey] || '<p>Detalhes indisponíveis.</p>';
-      modal.classList.remove('opacity-0', 'pointer-events-none');
-      modal.setAttribute('aria-hidden', 'false');
-      modal.querySelector('button').focus();
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      modal.classList.add('opacity-0', 'pointer-events-none');
-      modal.setAttribute('aria-hidden', 'true');
-      modalContent.innerHTML = '';
-      document.body.style.overflow = '';
-    }
-
-    readMoreButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        const articleKey = btn.getAttribute('data-article');
-        openModal(articleKey);
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+
+        // Close all panels
+        days.forEach((d) => {
+          const b = document.getElementById(`day-${d}-button`);
+          const p = document.getElementById(`day-${d}`);
+          b.setAttribute('aria-expanded', 'false');
+          p.classList.add('hidden');
+        });
+
+        if (!expanded) {
+          btn.setAttribute('aria-expanded', 'true');
+          panel.classList.remove('hidden');
+          panel.focus();
+          panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
       });
     });
 
-    modalClose.addEventListener('click', closeModal);
-
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        closeModal();
-      }
+    // Check-in buttons toggle pressed state
+    const checkinButtons = document.querySelectorAll('button[id^="checkin-"]');
+    checkinButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const pressed = btn.getAttribute('aria-pressed') === 'true';
+        btn.setAttribute('aria-pressed', !pressed);
+        if (!pressed) {
+          btn.classList.add('bg-red-800');
+          btn.classList.remove('bg-red-600');
+          btn.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Concluído';
+        } else {
+          btn.classList.remove('bg-red-800');
+          btn.classList.add('bg-red-600');
+          btn.innerHTML = '<i class="fas fa-check mr-2"></i>Marcar Conclusão';
+        }
+      });
     });
 
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
-        closeModal();
-      }
+    // Nutrition filter buttons
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const filterItems = document.querySelectorAll('.filter-item');
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+
+        filterButtons.forEach((b) => {
+          b.classList.remove('bg-red-600', 'text-white');
+          b.classList.add('bg-gray-700', 'text-gray-300');
+        });
+
+        btn.classList.add('bg-red-600', 'text-white');
+        btn.classList.remove('bg-gray-700', 'text-gray-300');
+
+        if (filter === 'all') {
+          filterItems.forEach((item) => {
+            item.classList.remove('hidden');
+          });
+        } else {
+          filterItems.forEach((item) => {
+            if (item.classList.contains(filter)) {
+              item.classList.remove('hidden');
+            } else {
+              item.classList.add('hidden');
+            }
+          });
+        }
+      });
     });
   </script>
  </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
