@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Duplicatas - Formulário Profissional</title>
+<style>
+  /* Reset básico */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    background-color: #f5f5f7;
+    color: #222222;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.5;
+  }
+
+  /* Navegação principal */
+  nav.navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #d1d1d6;
+    padding: 10px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 13px;
+    user-select: none;
+  }
+  nav.navbar a {
+    color: #49494d;
+    text-decoration: none;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+  }
+  nav.navbar a.active,
+  nav.navbar a:hover {
+    background-color: #e3e3e6;
+    color: #1c1c1f;
+    font-weight: 600;
+  }
+
+  /* Barra de botões principais - container */
+  section.actions-bar {
+    background-color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid #d1d1d6;
+    box-shadow: inset 0 -1px 0 #c6c6c8;
+    user-select: none;
+    justify-content: flex-start;
+  }
+
+  /* Botões principais */
+  button.btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #ffffff;
+    color: #1c1c1f;
+    border: 1.5px solid #8e8e93;
+    border-radius: 5px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    user-select: none;
+  }
+  button.btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  button.btn:hover:not(:disabled) {
+    background-color: #dcdcdc;
+    border-color: #787880;
+    color: #000000;
+  }
+  button.btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  /* Específicos de botões para ícones e cores de destaque sutis */
+  button.btn-save {
+    border-color: #4a90e2;
+    color: #4a90e2;
+  }
+  button.btn-save:hover:not(:disabled) {
+    background-color: #dbe9fb;
+    color: #1a56db;
+  }
+
+  button.btn-cancel {
+    border-color: #bf360c;
+    color: #bf360c;
+  }
+  button.btn-cancel:hover:not(:disabled) {
+    background-color: #f8dbd1;
+    color: #7d1d0d;
+  }
+
+  button.btn-edit {
+    border-color: #6b7280;
+    color: #6b7280;
+  }
+  button.btn-edit:hover:not(:disabled) {
+    background-color: #e4e7ec;
+    color: #374151;
+  }
+
+  button.btn-delete {
+    border-color: #991b1b;
+    color: #991b1b;
+  }
+  button.btn-delete:hover:not(:disabled) {
+    background-color: #f4dada;
+    color: #7f1d1d;
+  }
+
+  /* Dropdown ações adicionais */
+  div.dropdown {
+    position: relative;
+    margin-left: auto;
+  }
+  button.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 12px;
+    background: #fff;
+    border: 1.5px solid #8e8e93;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #444444;
+    transition: background-color 0.25s ease;
+  }
+  button.dropdown-toggle svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+  }
+  button.dropdown-toggle:hover {
+    background-color: #e3e3e6;
+    color: #222222;
+  }
+
+  div.dropdown-menu {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background-color: #fff;
+    border: 1.5px solid #b0b0b5;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    display: none;
+    min-width: 180px;
+    flex-direction: column;
+    z-index: 100;
+    user-select: none;
+  }
+  div.dropdown-menu.show {
+    display: flex;
+  }
+  div.dropdown-menu button {
+    border: none;
+    background: none;
+    padding: 11px 16px;
+    font-size: 14px;
+    text-align: left;
+    color: #444444;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  div.dropdown-menu button:hover {
+    background-color: #f0f0f2;
+    color: #1a1a1a;
+  }
+  div.dropdown-menu button svg {
+    stroke-width: 1.7;
+  }
+
+  /* TABS estilo minimalista */
+  nav.tabs {
+    display: flex;
+    border-bottom: 1.5px solid #d1d1d6;
+    padding-left: 16px;
+    user-select: none;
+    background: #fff;
+  }
+  nav.tabs div.tab {
+    padding: 12px 22px;
+    font-weight: 600;
+    font-size: 15px;
+    color: #49494d;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+    user-select: none;
+  }
+  nav.tabs div.tab:hover {
+    background-color: #f0f0f2;
+  }
+  nav.tabs div.tab.active {
+    background-color: #fff;
+    border-color: #d1d1d6;
+    border-bottom: 1.5px solid #fff;
+    color: #1c1c1f;
+    font-weight: 700;
+  }
+
+  /* Form container */
+  form#duplicatasForm {
+    max-width: 1100px;
+    background-color: #fff;
+    margin: 20px auto 48px;
+    padding: 20px 24px 40px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgb(40 40 50 / 0.06);
+    font-size: 15px;
+    color: #1c1c1f;
+    user-select: none;
+  }
+
+  /* Layout GRID para os campos do formulário */
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px 28px;
+    align-items: center;
+  }
+
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #3a3a3c;
+    user-select: text;
+  }
+  label.required::after {
+    content: " *";
+    color: #a71d2a;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 15px;
+    color: #1c1c1f;
+    border: 1.5px solid #c1c1c6;
+    border-radius: 8px;
+    background-color: #fafafa;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  input[type="date"]:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #7a7a7f;
+    box-shadow: 0 0 5px 2px rgb(122 122 127 / 0.25);
+    background-color: #fff;
+  }
+  input[readonly],
+  input[disabled],
+  textarea[readonly],
+  textarea[disabled],
+  select[disabled] {
+    cursor: not-allowed;
+    background-color: #e7e7ea;
+    color: #8a8a8f;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  /* Inputs pequenos como série, número parcela */
+  input.small-input {
+    max-width: 70px;
+  }
+
+  /* Grupos inline (select + botão de busca) */
+  .inline-button-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .inline-button-group select {
+    flex-grow: 1;
+  }
+  .inline-button-group button {
+    border: 1.5px solid #c1c1c6;
+    background-color: #fafafa;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+  }
+  .inline-button-group button:hover {
+    background-color: #e1e1e5;
+    border-color: #7a7a7f;
+  }
+  .inline-button-group button svg {
+    stroke: #4a4a4f;
+    width: 18px;
+    height: 18px;
+    stroke-width: 2;
+    fill: none;
+  }
+
+  /* Total líquido destacado e alinhado à direita */
+  .total-liquido-label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #3a3a3c;
+    margin-bottom: 4px;
+    user-select: text;
+  }
+  .total-liquido {
+    font-weight: 700;
+    font-size: 20px;
+    color: #444444;
+    text-align: right;
+    user-select: text;
+  }
+
+  /* Campos que ocupam toda a largura */
+  .full-width {
+    grid-column: 1 / -1;
+  }
+
+  /* Seção impostos */
+  section.impostos-section {
+    margin-top: 36px;
+    border-top: 1.5px solid #d1d1d6;
+    padding-top: 26px;
+    user-select: none;
+  }
+  section.impostos-section > h3 {
+    font-weight: 700;
+    color: #444444;
+    margin-bottom: 20px;
+    font-size: 17px;
+  }
+  div.impostos-grid {
+    display: grid;
+    gap: 20px 24px;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    align-items: center;
+  }
+
+  div.impostos-grid label {
+    user-select: text;
+  }
+
+  /* Responsividade */
+
+  @media (max-width: 900px) {
+    form#duplicatasForm {
+      margin: 16px 12px 40px;
+      padding: 20px;
+    }
+    .form-grid {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+    input.small-input {
+      max-width: 100%;
+    }
+    button.btn {
+      font-size: 13px;
+      padding: 9px 12px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    section.actions-bar {
+      justify-content: center;
+    }
+    button.btn {
+      flex: 1 1 100%;
+      max-width: 280px;
+      justify-content: center;
+    }
+    div.dropdown {
+      margin-left: 0;
+      flex: 1 1 100%;
+      text-align: center;
+    }
+    nav.tabs {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-right: 16px;
+    }
+    nav.tabs div.tab {
+      flex: none;
+      padding: 12px 16px;
+      font-size: 14px;
+    }
+    form#duplicatasForm {
+      margin: 16px 8px 48px;
+      padding: 16px;
+    }
+    .form-grid {
+      grid-template-columns: 1fr;
+      gap: 20px 0;
+    }
+  }
+
+  /* Scrollbar suave para overflow horizontal */
+  nav.tabs::-webkit-scrollbar {
+    height: 8px;
+  }
+  nav.tabs::-webkit-scrollbar-thumb {
+    background-color: rgba(136,136,144,0.3);
+    border-radius: 4px;
+  }
+  nav.tabs::-webkit-scrollbar-track {
+    background: transparent;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Navegação principal -->
+  <nav class="navbar" aria-label="Menu principal">
+    <a href="#" tabindex="0">Cliente</a>
+    <span aria-hidden="true">|</span>
+    <a href="#" tabindex="0">Estoque</a>
+    <span aria-hidden="true">|</span>
+    <a href="#" tabindex="0">Movimentação</a>
+    <span aria-hidden="true">|</span>
+    <a href="#" tabindex="0">Financeiro</a>
+    <span aria-hidden="true">|</span>
+    <a href="#" tabindex="0">Fornecedor</a>
+    <span aria-hidden="true">|</span>
+    <a href="#" tabindex="0">Pessoas</a>
+    <span aria-hidden="true">|</span>
+    <a href="#" class="active" aria-current="page" tabindex="0">Transportadora</a>
+    <span aria-hidden="true">|</span>
+    <a href="#" tabindex="0">Adicionais</a>
+    <span aria-hidden="true">|</span>
+    <a href="#" tabindex="0">Suporte</a>
+  </nav>
+
+  <!-- Barra de ações -->
+  <section class="actions-bar" role="region" aria-label="Ações principais">
+    <button id="btnNovo" class="btn" type="button" aria-label="Novo registro">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Novo
+    </button>
+
+    <button id="btnEditar" class="btn btn-edit" type="button" aria-label="Editar registro" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z"/></svg>
+      Editar
+    </button>
+
+    <button id="btnExcluir" class="btn btn-delete" type="button" aria-label="Excluir registro" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="3" width="6" height="1"/><path d="M19 6v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z"/></svg>
+      Excluir
+    </button>
+
+    <button id="btnSalvar" class="btn btn-save" type="button" aria-label="Salvar alterações" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7l-6-4zM12 19a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+      Salvar
+    </button>
+
+    <button id="btnCancelar" class="btn btn-cancel" type="button" aria-label="Cancelar edição" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      Cancelar
+    </button>
+
+    <div class="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button class="dropdown-toggle" id="dropdownToggle" aria-label="Mais ações" aria-controls="dropdownMenu" aria-expanded="false" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+      </button>
+      <div class="dropdown-menu" id="dropdownMenu" role="menu" aria-hidden="true" tabindex="-1">
+        <button id="btnDesativar" class="btn" type="button" role="menuitem" aria-label="Desativar">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2a10 10 0 0 0 0 20 10 10 0 0 0 0-20zm2 10v4h-4v-4h4zm0-6v4h-4V6h4z"/></svg>
+          Desativar
+        </button>
+        <button id="btnOpcoes" class="btn" type="button" role="menuitem" aria-label="Opções">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="5" cy="12" r="2"/></svg>
+          Opções
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tabs -->
+  <nav class="tabs" role="tablist" aria-label="Seções do formulário">
+    <div class="tab active" role="tab" aria-selected="true" tabindex="0" aria-controls="tabDados" id="tabBtnDados">Dados</div>
+    <div class="tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="tabRateio" id="tabBtnRateio">Rateio por Centro de Custo</div>
+  </nav>
+
+  <!-- Formulário -->
+  <form id="duplicatasForm" aria-labelledby="tabBtnDados" role="tabpanel" aria-live="polite">
+
+    <!-- Tab Dados -->
+    <section id="tabDados" class="form-grid" aria-hidden="false">
+      <div>
+        <label for="codigo">Código</label>
+        <input type="number" id="codigo" name="codigo" value="94536" readonly aria-readonly="true" />
+      </div>
+
+      <div>
+        <label for="tipoDocumento" class="required">Tipo Documento</label>
+        <select id="tipoDocumento" name="tipoDocumento" required aria-required="true" aria-describedby="tipoDocumentoHelp">
+          <option value="RC" selected>RC</option>
+          <option value="NF">NF</option>
+          <option value="OUTRO">Outro</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="dataEmissao" class="required">Data Emissão</label>
+        <input type="date" id="dataEmissao" name="dataEmissao" value="2024-12-09" required aria-required="true" />
+      </div>
+
+      <div>
+        <label for="dataVencimento" class="required">Data Vencimento</label>
+        <input type="date" id="dataVencimento" name="dataVencimento" value="2025-12-09" required aria-required="true" />
+      </div>
+
+      <div>
+        <label for="entrada">Entrada</label>
+        <div class="inline-button-group">
+          <select id="entrada" name="entrada" aria-label="Entrada">
+            <option value=""></option>
+            <option value="entrada1">Entrada 1</option>
+            <option value="entrada2">Entrada 2</option>
+          </select>
+          <button type="button" title="Buscar Entrada" aria-label="Buscar Entrada">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="7" stroke-width="2" stroke="currentColor" fill="none"></circle><line x1="21" y1="21" x2="15" y2="15" stroke-width="2" stroke="currentColor"></line></svg>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <label for="fornecedor" class="required">Fornecedor</label>
+        <div class="inline-button-group">
+          <select id="fornecedor" name="fornecedor" required aria-required="true" aria-label="Fornecedor">
+            <option value="CEMIG" selected>CEMIG DISTRIBUIÇÃO SA</option>
+            <option value="FORNEC2">Fornecedor 2</option>
+          </select>
+          <button type="button" title="Buscar Fornecedor" aria-label="Buscar Fornecedor">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="7" stroke-width="2" stroke="currentColor" fill="none"></circle><line x1="21" y1="21" x2="15" y2="15" stroke-width="2" stroke="currentColor"></line></svg>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <label for="notaFiscal">Nota Fiscal</label>
+        <input type="text" id="notaFiscal" name="notaFiscal" autocomplete="off" />
+      </div>
+
+      <div>
+        <label for="caixa" class="required">Caixa</label>
+        <select id="caixa" name="caixa" required aria-required="true">
+          <option value="CX LAFAYETE" selected>CX LAFAYETE</option>
+          <option value="CX1">Caixa 1</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="duplicata">Duplicata</label>
+        <input type="text" id="duplicata" name="duplicata" autocomplete="off" />
+      </div>
+
+      <div>
+        <label for="serie">Série</label>
+        <input type="text" id="serie" name="serie" class="small-input" autocomplete="off" />
+      </div>
+
+      <div>
+        <label for="numParcela">Nº Parcela</label>
+        <input type="number" id="numParcela" name="numParcela" value="12" min="1" class="small-input" />
+      </div>
+
+      <div>
+        <label for="parcela">Parcela</label>
+        <input type="number" id="parcela" name="parcela" value="94525" />
+      </div>
+
+      <div>
+        <label for="meioPagamento" class="required">Meio de Pagamento</label>
+        <div class="inline-button-group">
+          <select id="meioPagamento" name="meioPagamento" required aria-required="true">
+            <option value="boleto" selected>Boleto</option>
+            <option value="cartao">Cartão</option>
+            <option value="transferencia">Transferência</option>
+          </select>
+          <button type="button" title="Buscar Meio de Pagamento" aria-label="Buscar Meio de Pagamento">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="7" stroke-width="2" stroke="currentColor" fill="none"></circle><line x1="21" y1="21" x2="15" y2="15" stroke-width="2" stroke="currentColor"></line></svg>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <label for="planoContas">Plano de contas</label>
+        <select id="planoContas" name="planoContas">
+          <option value="LUZ" selected>LUZ</option>
+          <option value="AGUA">ÁGUA</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="centroCusto">Centro de custo</label>
+        <select id="centroCusto" name="centroCusto">
+          <option value="ADMINISTRATIVO" selected>ADMINISTRATIVO</option>
+          <option value="PRODUCAO">PRODUÇÃO</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="valor" class="required">Valor</label>
+        <input type="number" id="valor" name="valor" step="0.01" min="0" required aria-required="true" value="364.37" />
+      </div>
+
+      <div>
+        <label for="acrescimo">Acréscimo</label>
+        <input type="text" id="acrescimo" name="acrescimo" value="R$ 0,00" readonly aria-readonly="true" />
+      </div>
+
+      <div>
+        <label for="desconto">Desconto</label>
+        <input type="text" id="desconto" name="desconto" value="R$ 0,00" readonly aria-readonly="true" />
+      </div>
+
+      <div style="text-align: right;">
+        <label class="total-liquido-label" for="totalLiquido" aria-label="Total Líquido">Total Líquido</label>
+        <div id="totalLiquido" class="total-liquido" aria-live="polite" aria-atomic="true">R$ 364,37</div>
+      </div>
+
+      <div class="full-width">
+        <label for="observacao">Observação</label>
+        <textarea id="observacao" name="observacao" rows="3" autocomplete="off"></textarea>
+      </div>
+
+      <div class="full-width">
+        <label for="tag">Tag</label>
+        <input type="text" id="tag" name="tag" autocomplete="off" />
+      </div>
+
+      <div class="full-width">
+        <label for="linhaDigitavel">Linha Digitável do Boleto</label>
+        <input type="text" id="linhaDigitavel" name="linhaDigitavel" autocomplete="off" />
+      </div>
+
+      <!-- Impostos -->
+      <section class="impostos-section" aria-label="Impostos">
+        <h3>Impostos</h3>
+        <div class="impostos-grid">
+          <div>
+            <label for="issPerc">ISS %</label>
+            <input type="number" id="issPerc" name="issPerc" step="0.01" min="0" value="0.00"/>
+          </div>
+          <div>
+            <label for="issReais">ISS R$</label>
+            <input type="number" id="issReais" name="issReais" step="0.01" min="0" value="0.00"/>
+          </div>
+          <div>
+            <label for="irPerc">IR %</label>
+            <input type="number" id="irPerc" name="irPerc" step="0.01" min="0" value="0.00"/>
+          </div>
+          <div>
+            <label for="irReais">IR R$</label>
+            <input type="number" id="irReais" name="irReais" step="0.01" min="0" value="0.00"/>
+          </div>
+          <div>
+            <label for="inssPerc">INSS %</label>
+            <input type="number" id="inssPerc" name="inssPerc" step="0.01" min="0" value="0.00"/>
+          </div>
+          <div>
+            <label for="inssReais">INSS R$</label>
+            <input type="number" id="inssReais" name="inssReais" step="0.01" min="0" value="0.00"/>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- Tab Rateio -->
+    <section id="tabRateio" style="display:none; margin-top: 32px; font-style: italic; color: #707070;" aria-hidden="true">
+      <p>Conteúdo para "Rateio por Centro de Custo" será implementado.</p>
+    </section>
+  </form>
+
+  <script>
+    // Tabs controle
+    const tabs = document.querySelectorAll('nav.tabs .tab');
+    const tabDados = document.getElementById('tabDados');
+    const tabRateio = document.getElementById('tabRateio');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+          t.tabIndex = -1;
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        tab.tabIndex = 0;
+
+        if (tab.id === 'tabBtnDados') {
+          tabDados.style.display = 'grid';
+          tabDados.setAttribute('aria-hidden', 'false');
+          tabRateio.style.display = 'none';
+          tabRateio.setAttribute('aria-hidden', 'true');
+          document.getElementById('duplicatasForm').setAttribute('aria-labelledby', 'tabBtnDados');
+        } else {
+          tabRateio.style.display = 'block';
+          tabRateio.setAttribute('aria-hidden', 'false');
+          tabDados.style.display = 'none';
+          tabDados.setAttribute('aria-hidden', 'true');
+          document.getElementById('duplicatasForm').setAttribute('aria-labelledby', 'tabBtnRateio');
+        }
+      });
+    });
+
+    // Dropdown toggle
+    const dropdownToggle = document.getElementById('dropdownToggle');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    dropdownToggle.addEventListener('click', e => {
+      const expanded = dropdownToggle.getAttribute('aria-expanded') === 'true';
+      dropdownToggle.setAttribute('aria-expanded', String(!expanded));
+      dropdownMenu.classList.toggle('show');
+      dropdownMenu.setAttribute('aria-hidden', String(expanded));
+      if (!expanded) dropdownMenu.focus();
+    });
+    // Close dropdown ao clicar fora
+    document.addEventListener('click', e => {
+      if (!dropdownMenu.contains(e.target) && e.target !== dropdownToggle) {
+        dropdownMenu.classList.remove('show');
+        dropdownToggle.setAttribute('aria-expanded', 'false');
+        dropdownMenu.setAttribute('aria-hidden', 'true');
+      }
+    });
+    // Escape fecha dropdown
+    dropdownMenu.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        dropdownMenu.classList.remove('show');
+        dropdownToggle.setAttribute('aria-expanded', 'false');
+        dropdownMenu.setAttribute('aria-hidden', 'true');
+        dropdownToggle.focus();
+      }
+    });
+
+    // Cálculo Total Líquido
+    const valorInput = document.getElementById('valor');
+    const acrescimoInput = document.getElementById('acrescimo');
+    const descontoInput = document.getElementById('desconto');
+    const totalLiquidoEl = document.getElementById('totalLiquido');
+
+    const parseMoney = (text) => {
+      const val = text.replace(/[R$\s\.]/g, '').replace(',', '.');
+      return parseFloat(val) || 0;
+    };
+    const formatMoney = value => {
+      return value.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+    };
+    function updateTotalLiquido() {
+      const valor = parseFloat(valorInput.value) || 0;
+      const acrescimo = parseMoney(acrescimoInput.value);
+      const desconto = parseMoney(descontoInput.value);
+      const total = valor + acrescimo - desconto;
+      totalLiquidoEl.textContent = formatMoney(total);
+    }
+    valorInput.addEventListener('input', updateTotalLiquido);
+    updateTotalLiquido();
+
+    // Botões: ativar e desativar estados (exemplo básico)
+    const btnNovo = document.getElementById('btnNovo');
+    const btnEditar = document.getElementById('btnEditar');
+    const btnExcluir = document.getElementById('btnExcluir');
+    const btnSalvar = document.getElementById('btnSalvar');
+    const btnCancelar = document.getElementById('btnCancelar');
+
+    btnNovo.addEventListener('click', () => {
+      btnEditar.disabled = false;
+      btnExcluir.disabled = false;
+      btnSalvar.disabled = false;
+      btnCancelar.disabled = false;
+      alert('Novo registro iniciado!');
+    });
+    btnCancelar.addEventListener('click', () => {
+      btnEditar.disabled = true;
+      btnExcluir.disabled = true;
+      btnSalvar.disabled = true;
+      btnCancelar.disabled = true;
+      alert('Operação cancelada!');
+    });
+
+    // Controle de tab com teclado para acessibilidade
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('keydown', e => {
+        if(e.key === 'ArrowRight') {
+          e.preventDefault();
+          let nextIndex = (i + 1) % tabs.length;
+          tabs[nextIndex].focus();
+          tabs[nextIndex].click();
+        }
+        else if(e.key === 'ArrowLeft') {
+          e.preventDefault();
+          let prevIndex = (i - 1 + tabs.length) % tabs.length;
+          tabs[prevIndex].focus();
+          tabs[prevIndex].click();
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
